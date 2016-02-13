@@ -14,7 +14,7 @@ class GEDCOMLine(object):
         tokens = line_text_cleaned.split()
 
         self._line_text = line_text_cleaned
-        self._level = tokens[0]
+        self._level = int(tokens[0])
 
         # special case:
         # ID preceding INDI or FAM tag
@@ -24,7 +24,7 @@ class GEDCOMLine(object):
             self._payload = tokens[1]
         else:
             self._tag = tokens[1]
-            self._payload = tokens[2:]
+            self._payload = str.join(' ', tokens[2:])
 
     @property
     def level(self):
