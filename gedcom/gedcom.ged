@@ -1,0 +1,240 @@
+#Note for the Group
+
+0 HEAD
+1 FILE My Family
+1 DATE 31 JAN 2016
+1 DEST ANSTFILE
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 SUBM @I1@
+2 NAME Michael Kovalski
+1 SUBN
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Michael /Kovalski/
+2 GIVN Michael
+2 SURN Kovalski
+2 _MARNM Kovalski
+1 SEX M
+1 BIRT
+2 DATE 13 FEB 1993
+1 FAMC @F1@
+0 @I2@ INDI
+1 NAME Daniel /Kovalski/
+2 GIVN Daniel
+2 SURN Kovalski
+2 _MARNM Kovalski
+1 SEX M
+1 FAMS @F1@
+1 FAMC @F2@
+0 @I3@ INDI
+1 NAME Deborah /Lytle/
+2 GIVN Deborah
+2 SURN Lytle
+2 _MARNM Kovalski
+1 SEX F
+1 FAMS @F1@
+1 FAMC @F3@
+0 @I4@ INDI
+1 NAME Edward /Kovalski/
+2 GIVN Edward
+2 SURN Kovalski
+2 _MARNM Kovalski
+1 SEX M
+1 BIRT
+2 DATE 28 SEP 1998
+1 FAMC @F1@
+0 @I5@ INDI
+1 NAME Jack /Lytle/
+2 GIVN Jack
+2 SURN Lytle
+2 _MARNM Lytle
+1 SEX M
+1 BIRT
+2 DATE 29 MAR 1937
+1 DEAT Y
+2 DATE 10 MAY 2005
+1 FAMS @F3@
+0 @I6@ INDI
+1 NAME Constance /Nagle/
+2 GIVN Constance
+2 SURN Nagle
+2 _MARNM Lytle
+1 SEX F
+1 BIRT
+2 DATE 12 JAN 1942
+1 FAMS @F3@
+1 FAMC @F4@
+0 @I7@ INDI
+1 NAME Bruce /Lytle/
+2 GIVN Bruce
+2 SURN Lytle
+2 _MARNM Lytle
+1 SEX M
+1 BIRT
+2 DATE 17 DEC 1958
+1 FAMS @F5@
+1 FAMS @F6@
+1 FAMC @F3@
+0 @I8@ INDI
+1 NAME Henry /Kovalski/
+2 GIVN Henry
+2 SURN Kovalski
+2 _MARNM Kovalski
+1 SEX M
+1 BIRT
+2 DATE 2 JUL 1922
+1 DEAT Y
+1 FAMS @F2@
+1 FAMS @F7@
+1 FAMC @F8@
+0 @I9@ INDI
+1 NAME Florence /Kulik/
+2 GIVN Florence
+2 SURN Kulik
+2 _MARNM Kovalski
+1 SEX F
+1 BIRT
+2 DATE 24 FEB 1926
+1 DEAT Y
+1 FAMS @F2@
+0 @I10@ INDI
+1 NAME Germaine /Liska/
+2 GIVN Germaine
+2 SURN Liska
+2 _MARNM Liska
+1 SEX F
+1 BIRT
+2 DATE 11 AUG 1964
+1 FAMS @F6@
+0 @I11@ INDI
+1 NAME Melina /Agosta/
+2 GIVN Melina
+2 SURN Agosta
+2 _MARNM Lytle
+1 SEX F
+1 BIRT
+2 DATE 8 NOV 1963
+1 FAMS @F5@
+0 @I12@ INDI
+1 NAME Joseph /Nagle/
+2 GIVN Joseph
+2 SURN Nagle
+2 _MARNM Nagle
+1 SEX M
+1 DEAT Y
+1 FAMS @F4@
+1 FAMS @F9@
+0 @I13@ INDI
+1 NAME Mary /Stumph/
+2 GIVN Mary
+2 SURN Stumph
+2 _MARNM Nagle
+1 SEX F
+1 DEAT Y
+1 FAMS @F4@
+1 FAMS @F10@
+0 @I14@ INDI
+1 NAME Denise /Lytle/
+2 GIVN Denise
+2 SURN Lytle
+2 _MARNM Lytle
+1 FAMC @F6@
+0 @I15@ INDI
+1 NAME Michael /Kovalski/
+2 GIVN Michael
+2 SURN Kovalski
+2 _MARNM Kovalski
+1 SEX M
+1 DEAT Y
+1 FAMS @F8@
+0 @I16@ INDI
+1 NAME Anna /Kovalski/
+2 GIVN Anna
+2 SURN Kovalski
+2 _MARNM Kovalski
+1 SEX F
+1 FAMS @F8@
+0 @I17@ INDI
+1 NAME Grace /Yeller/
+2 GIVN Grace
+2 SURN Yeller
+2 _MARNM Yeller
+1 SEX F
+1 DEAT Y
+1 FAMS @F7@
+0 @I18@ INDI
+1 NAME Donny /Kovalski/
+2 GIVN Donny
+2 SURN Kovalski
+2 _MARNM Kovalski
+1 SEX M
+1 BIRT
+2 DATE 11 APR 1969
+1 FAMC @F7@
+0 @I19@ INDI
+1 NAME Connor /Tillman/
+2 GIVN Connor
+2 SURN Tillman
+2 _MARNM Tillman
+1 SEX M
+1 DEAT Y
+1 FAMS @F10@
+0 @F1@ FAM
+1 HUSB @I2@
+1 WIFE @I3@
+1 CHIL @I1@
+1 CHIL @I4@
+1 _CURRENT Y
+0 @F2@ FAM
+1 HUSB @I8@
+1 WIFE @I9@
+1 CHIL @I2@
+1 _CURRENT Y
+0 @F3@ FAM
+1 HUSB @I5@
+1 WIFE @I6@
+1 CHIL @I3@
+1 CHIL @I7@
+1 MARR
+1 _CURRENT Y
+0 @F4@ FAM
+1 HUSB @I12@
+1 WIFE @I13@
+1 CHIL @I6@
+1 MARR
+1 _CURRENT Y
+0 @F9@ FAM
+1 HUSB @I12@
+1 _CURRENT N
+0 @F5@ FAM
+1 HUSB @I7@
+1 WIFE @I11@
+1 _CURRENT Y
+0 @F6@ FAM
+1 HUSB @I7@
+1 WIFE @I10@
+1 CHIL @I14@
+1 MARR
+1 DIV
+1 _CURRENT N
+0 @F7@ FAM
+1 HUSB @I8@
+1 WIFE @I17@
+1 CHIL @I18@
+1 MARR
+1 DIV
+1 _CURRENT N
+0 @F8@ FAM
+1 HUSB @I15@
+1 WIFE @I16@
+1 CHIL @I8@
+1 _CURRENT Y
+0 @F10@ FAM
+1 HUSB @I19@
+1 WIFE @I13@
+1 MARR
+1 _SEPR
+1 _CURRENT N
+0 TRLR
