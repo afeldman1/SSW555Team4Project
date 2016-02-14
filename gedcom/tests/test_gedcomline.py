@@ -5,7 +5,7 @@
 """
 
 import unittest
-from gedcomline import GEDCOMLine
+from gedcom.gedcomline import GEDCOMLine
 
 class GEDCOMLineTest(unittest.TestCase):
 
