@@ -4,18 +4,15 @@
     Team 4
 """
 
-from gedentity import GEDEntity
+class Individual(object):
 
-class Individual(GEDEntity):
-
-    def __init__(self, id_number,
-                    name = None,
-                    sex = None,
-                    family_by_blood = None,
-                    family_in_law = None,
-                    birthday = None,
-                    death_date = None):
-        super().__init__(id_number)
+    def __init__(self,
+                 name = None,
+                 sex = None,
+                 family_by_blood = None,
+                 family_in_law = None,
+                 birthday = None,
+                 death_date = None):
         self._name = name
         self._sex = sex
         self._family_by_blood = family_by_blood

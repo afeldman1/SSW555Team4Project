@@ -4,18 +4,14 @@
     Team 4
 """
 
-from gedentity import GEDEntity
+class Family(object):
 
-class Family(GEDEntity):
-
-    def __init__(self, id_number,
+    def __init__(self,
                  husband = None,
                  wife = None,
                  children = [],
                  marriage_date = None,
-                 divorce_date = None ):
-
-        super().__init__(id_number)
+                 divorce_date = None):
         self._husband = husband
         self._wife = wife
         self._children = children
