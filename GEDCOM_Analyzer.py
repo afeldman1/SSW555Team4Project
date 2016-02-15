@@ -17,7 +17,7 @@ def main():
         f = open(fName)
     except:
         print ('File cannot be opened:', fname)
-        exit()    
+        exit()
 
     inds = dict()
     fams = dict()
@@ -82,7 +82,9 @@ def main():
         print("%s %s" % (key, inds[key].name))
 
     for key in sorted(fams):
-        print("%s %s %s" % (key, inds[fams[key].husband].name, inds[fams[key].wife].name))
+        husband_name = inds[fams[key].husband].name if fams[key].husband else ''
+        wife_name = inds[fams[key].wife].name if fams[key].wife else ''
+        print("%s %s %s" % (key, husband_name, wife_name))
 
 if __name__ == '__main__':
     main()
