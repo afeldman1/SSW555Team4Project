@@ -55,3 +55,11 @@ class Family(object):
     @divorce_date.setter
     def divorce_date(self, divorce_date):
         self._divorce_date = divorce_date
+        
+    def __repr__(self):
+        return 'Family({husband} & {wife}, {marriage}-{divorce})'.format(
+                husband = self.husband,
+                wife = self.wife,
+                marriage = self.marriage_date,
+                divorce = self.divorce_date)
+        

@@ -6,9 +6,16 @@
 
 import gedcom
 
+from datetime import datetime
 from gedcom.gedcomline import GEDCOMLine
 from gedcom.individual import Individual
 from gedcom.family import Family
+
+def parse_date(date_text):
+    """
+        Parses a GEDCOM format date into an internal date object.
+    """
+    return datetime.strptime(date_text, '%d %b %Y').date()
 
 def main():
 
@@ -24,7 +31,7 @@ def main():
     processInd = False
     processFam = False
 
-    gedcom_lines = [GEDCOMLine(line) for line in f]
+    gedcom_lines = (GEDCOMLine(line) for line in f)
     lineno = 0
 
     for gedline in gedcom_lines:
@@ -45,26 +52,29 @@ def main():
                     inds[uid].name = payload.replace("/","")
                 elif tag == "SEX":
                     inds[uid].sex = payload
-                elif tag == "BIRT":
-                    pass
-                elif tag == "DEAT":
-                    pass
+                elif tag == "FAMC":
+                    inds[uid].family_by_blood = payload
+                elif tag == "FAMS":
+                    inds[uid].family_in_law = payload
                 elif tag == "DATE":
                     if prevTag == "BIRT":
-                        inds[uid].birthday = payload
+                        inds[uid].birthday = parse_date(payload)
                     elif prevTag == "DEAT":
-                        inds[uid].death_date = payload
+                        inds[uid].death_date = parse_date(payload)
+                
             elif processFam:                    #If gathering data on family
-                if tag == "MARR":               #Check tag and store appropriately
-                    pass
-                elif tag == "HUSB":
+                if tag == "HUSB":               #Check tag and store appropriately
                     fams[uid].husband = payload
                 elif tag == "WIFE":
                     fams[uid].wife = payload
                 elif tag == "CHIL":
                     fams[uid].add_child(payload)
-                elif tag == "DIV":
-                    pass
+                elif tag == "DATE":
+                    if prevTag == "MARR":
+                        fams[uid].marriage_date = parse_date(payload)
+                    elif prevTag == "DIV":
+                        fams[uid].divorce_date = parse_date(payload)
+                
             elif gedline.tag == "INDI":         #If start of individual record
                 uid = gedline.payload           #Store identifier in dictionary and
                 inds[uid] = Individual()        #prepare for more individual info

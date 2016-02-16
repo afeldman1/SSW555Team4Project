@@ -61,3 +61,13 @@ class Individual(object):
     @death_date.setter
     def death_date(self, death_date):
         self._death_date = death_date
+        
+    def __repr__(self):
+        return 'Individual({name}, {sex}, {fam}, {inlaw}, {birth}-{death})'.format(
+                name = self.name,
+                sex = self.sex,
+                fam = self.family_by_blood,
+                inlaw = self.family_in_law,
+                birth = self.birthday,
+                death = self.death_date)
+        
