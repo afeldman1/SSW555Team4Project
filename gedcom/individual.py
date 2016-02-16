@@ -4,15 +4,19 @@
     Team 4
 """
 
-class Individual(object):
+from .gedobject import GedObject
+
+class Individual(GedObject):
 
     def __init__(self,
+                 uid,
                  name = None,
                  sex = None,
                  family_by_blood = None,
                  family_in_law = None,
                  birthday = None,
                  death_date = None):
+        super().__init__(uid)
         self._name = name
         self._sex = sex
         self._family_by_blood = family_by_blood
@@ -63,7 +67,8 @@ class Individual(object):
         self._death_date = death_date
         
     def __repr__(self):
-        return 'Individual({name}, {sex}, {fam}, {inlaw}, {birth}-{death})'.format(
+        return 'Individual{uid}({name}, {sex}, {fam}, {inlaw}, {birth}-{death})'.format(
+                uid = self.uid,
                 name = self.name,
                 sex = self.sex,
                 fam = self.family_by_blood,

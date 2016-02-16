@@ -5,11 +5,13 @@
 """
 
 import gedcom
+import gedreporter
 
 from datetime import datetime
 from gedcom.gedcomline import GEDCOMLine
 from gedcom.individual import Individual
 from gedcom.family import Family
+from gedreporter import GedReporter
 
 def parse_date(date_text):
     """
@@ -77,17 +79,19 @@ def main():
                 
             elif gedline.tag == "INDI":         #If start of individual record
                 uid = gedline.payload           #Store identifier in dictionary and
-                inds[uid] = Individual()        #prepare for more individual info
+                inds[uid] = Individual(uid)     #prepare for more individual info
                 processInd = True
                 processFam = False
             elif gedline.tag == "FAM":          #If start of family record
                 uid = gedline.payload           #Store identifier in dictionary and
-                fams[uid] = Family()            #prepare for more family info
+                fams[uid] = Family(uid)         #prepare for more family info
                 processFam = True
                 processInd = False
 
             prevTag = tag    #Save tag to associate date on next gedline
 
+    reporter = GedReporter(inds, fams)
+            
     for key in sorted(inds):
         print("%s %s" % (key, inds[key].name))
 
@@ -95,6 +99,10 @@ def main():
         husband_name = inds[fams[key].husband].name if fams[key].husband else ''
         wife_name = inds[fams[key].wife].name if fams[key].wife else ''
         print("%s %s %s" % (key, husband_name, wife_name))
+        
+    print('Individuals over 150:')
+    for ind in reporter.less_than_150_years_old():
+        print(ind)
 
 if __name__ == '__main__':
     main()

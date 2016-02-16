@@ -4,14 +4,18 @@
     Team 4
 """
 
-class Family(object):
+from .gedobject import GedObject
+
+class Family(GedObject):
 
     def __init__(self,
+                 uid,
                  husband = None,
                  wife = None,
                  children = [],
                  marriage_date = None,
                  divorce_date = None):
+        super().__init__(uid)
         self._husband = husband
         self._wife = wife
         self._children = children
@@ -57,7 +61,8 @@ class Family(object):
         self._divorce_date = divorce_date
         
     def __repr__(self):
-        return 'Family({husband} & {wife}, {marriage}-{divorce})'.format(
+        return 'Family{uid}({husband} & {wife}, {marriage}-{divorce})'.format(
+                uid = self.uid,
                 husband = self.husband,
                 wife = self.wife,
                 marriage = self.marriage_date,

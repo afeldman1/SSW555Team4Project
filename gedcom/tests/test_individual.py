@@ -10,12 +10,15 @@ from gedcom.individual import Individual
 class GEDEntitiesTest(unittest.TestCase):
 
     def test_Individual(self):
-        entity = Individual(name = 'Homer /Simpson/',
+        entity = Individual(uid = '@I01@',
+                            name = 'Homer /Simpson/',
                             sex = 'M',
                             family_by_blood = 'Simpson',
                             family_in_law = 'Bouvier',
                             birthday = '12 MAY 1955',
                             death_date = None)
+                            
+        self.assertEqual(entity.uid, '@I01@')
         self.assertEqual(entity.name, 'Homer /Simpson/')
         self.assertEqual(entity.sex, 'M')
         self.assertEqual(entity.family_by_blood, 'Simpson')
