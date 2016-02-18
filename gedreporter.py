@@ -23,7 +23,22 @@ class GedReporter(object):
     @property
     def families(self):
         return self._fams
-    
+
+    def dates_before_current_date(self):
+        """
+            US01: Dates before current date
+            Dates (birth, marriage, divorce, death) should not be after the
+            current date
+        """
+        return filter(lambda ind: ind.birthday > date.today() if ind.birthday else False and ind.death_date > date.today() if ind.death_date else False, self._inds.values()) and filter(lambda fam: fam.marriage_date > date.today() if fam.marriage_date else False and fam.divorce_date > date.today() if fam.divorce_date else False, self._fams.values())
+
+    def divorce_before_death(self):
+        """
+            US06: Divorce before death
+            Divorce can only occur before death of both spouses
+        """
+        return filter(lambda fam: fam.divorce_date > fam.husband.death_date if fam.divorce_date and fam.husband.death_date else False and fam.divorce_date > fam.wife.death_date if fam.divorce_date and fam.wife.death_date else False, self._fams.values())
+
     def less_than_150_years_old(self):
         """
             US07: Less than 150 years old
