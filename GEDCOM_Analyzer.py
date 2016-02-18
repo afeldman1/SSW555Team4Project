@@ -4,6 +4,7 @@
     Team 4
 """
 
+import sys
 import gedcom
 import gedreporter
 
@@ -20,11 +21,14 @@ def parse_date(date_text):
     return datetime.strptime(date_text, '%d %b %Y').date()
 
 def main():
+    """
+        main subprogram
+    """
 
-    fName = input('Enter the file name: ')
+    fname = sys.argv[1] if len(sys.argv) > 1 else input('Enter the file name: ') 
     try:
-        f = open(fName)
-    except:
+        f = open(fname)
+    except IOError:
         print ('File cannot be opened:', fname)
         exit()
 

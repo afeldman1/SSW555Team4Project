@@ -32,7 +32,26 @@ class GedReporter(object):
             living people
         """
         return filter(lambda ind: _calc_age(ind) >= 150, self._inds.values())
-        
+     
+    def birth_before_marriage_of_parents(self):
+        """
+            US08: Birth before marriage of parents
+            Child should be born after marriage of parents (and before their
+            divorce)
+        """
+        for ind in self._inds.values():
+            born = ind.birthday
+            fam = self._fams[ind.family_by_blood]
+            married = self._fams[ind.family_by_blood].marriage_date
+            divorced = self._fams[ind.family_by_blood].divorce_date
+            
+            if not married:
+                pass
+            elif born < married:
+                yield ind
+            elif divorced and divorced < born:
+                yield ind
+            
 def _calc_age(ind):
     """
         Calaculates the current age of an individual. If the individual has
