@@ -104,9 +104,9 @@ def main():
         wife_name = inds[fams[key].wife].name if fams[key].wife else ''
         print("%s %s %s" % (key, husband_name, wife_name))
 
-#     print('Dates before current date:')
-#     for ent in reporter.dates_before_current_date():
-#         print(ent)
+    print('Dates before current date:')
+    for ent in reporter.dates_before_current_date():
+        print(ent)
 #
 #     print('Divorce before death:')
 #     for fam in reporter.divorce_before_death():
