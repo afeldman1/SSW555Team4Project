@@ -55,6 +55,11 @@ class GedReporter(object):
             divorce)
         """
         for ind in self._inds.values():
+        
+            if not ind.family_by_blood:
+                # skip over orphans
+                continue
+        
             born = ind.birthday
             fam = self._fams[ind.family_by_blood]
             married = self._fams[ind.family_by_blood].marriage_date

@@ -67,7 +67,7 @@ class Individual(GedObject):
         self._death_date = death_date
         
     def __repr__(self):
-        return 'Individual{uid}({name}, {sex}, {fam}, {inlaw}, {birth}-{death})'.format(
+        return 'Individual{uid}({name}, {sex}, {fam}, {inlaw}, {birth}..{death})'.format(
                 uid = self.uid,
                 name = self.name,
                 sex = self.sex,

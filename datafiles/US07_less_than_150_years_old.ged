@@ -1,0 +1,41 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US07: Less than 150 years old
+1 NOTE Death should be less than 150 years after birth for dead people,
+1 NOTE and current date should be less than 150 years after birth for all
+1 NOTE living people.
+1 NOTE ************************
+0 @I150@ INDI
+1 NAME Old /Guy/
+1 SEX M
+1 BIRT
+2 DATE 16 FEB 1850
+1 NOTE ========================
+0 @I151@ INDI
+1 NAME Old /Lady/
+1 SEX F
+1 BIRT
+2 DATE 1 FEB 1866
+1 NOTE ========================
+0 @I152@ INDI
+1 NAME JustTurned /150yo/
+1 SEX F
+1 BIRT
+2 DATE 1 FEB 1800
+1 DEAT
+2 DATE 1 FEB 1950
+1 NOTE ========================
+0 @I153@ INDI
+1 NAME JustMissed /150yo/
+1 SEX F
+1 BIRT
+2 DATE 1 FEB 1800
+1 DEAT
+2 DATE 31 JAN 1950
+1 NOTE ========================
+0 TRLR

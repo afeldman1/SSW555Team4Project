@@ -1,8 +1,8 @@
 0 HEAD
 1 NOTE ************************
-1 NOTE William J Pierro
 1 NOTE SSW555
-1 NOTE Assignment P01
+1 NOTE 2016 Spring
+1 NOTE Team 4
 1 NOTE ************************
 1 SOUR Family Echo
 2 WWW http://www.familyecho.com/
@@ -16,16 +16,6 @@
 2 NAME William
 1 SUBN
 1 CHAR UTF-8
-0 @I150@ INDI
-1 NAME Old /Guy/
-1 SEX M
-1 BIRT
-2 DATE 16 FEB 1850
-0 @I151@ INDI
-1 NAME Old /Lady/
-1 SEX F
-1 BIRT
-2 DATE 1 FEB 1866
 0 @I1@ INDI
 1 NAME William /Costa/
 2 GIVN William

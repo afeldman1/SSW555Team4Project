@@ -61,7 +61,7 @@ class Family(GedObject):
         self._divorce_date = divorce_date
         
     def __repr__(self):
-        return 'Family{uid}({husband} & {wife}, {marriage}-{divorce})'.format(
+        return 'Family{uid}({husband} & {wife}, {marriage}..{divorce})'.format(
                 uid = self.uid,
                 husband = self.husband,
                 wife = self.wife,

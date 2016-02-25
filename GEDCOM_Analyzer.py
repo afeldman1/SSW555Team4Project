@@ -25,7 +25,7 @@ def main():
         main subprogram
     """
 
-    fname = sys.argv[1] if len(sys.argv) > 1 else input('Enter the file name: ') 
+    fname = sys.argv[1] if len(sys.argv) > 1 else input('Enter the file name: ')
     try:
         f = open(fname)
     except IOError:
@@ -67,7 +67,7 @@ def main():
                         inds[uid].birthday = parse_date(payload)
                     elif prevTag == "DEAT":
                         inds[uid].death_date = parse_date(payload)
-                
+
             elif processFam:                    #If gathering data on family
                 if tag == "HUSB":               #Check tag and store appropriately
                     fams[uid].husband = payload
@@ -80,7 +80,7 @@ def main():
                         fams[uid].marriage_date = parse_date(payload)
                     elif prevTag == "DIV":
                         fams[uid].divorce_date = parse_date(payload)
-                
+
             elif gedline.tag == "INDI":         #If start of individual record
                 uid = gedline.payload           #Store identifier in dictionary and
                 inds[uid] = Individual(uid)     #prepare for more individual info
@@ -95,7 +95,7 @@ def main():
             prevTag = tag    #Save tag to associate date on next gedline
 
     reporter = GedReporter(inds, fams)
-            
+
     for key in sorted(inds):
         print("%s %s" % (key, inds[key].name))
 
@@ -104,16 +104,20 @@ def main():
         wife_name = inds[fams[key].wife].name if fams[key].wife else ''
         print("%s %s %s" % (key, husband_name, wife_name))
 
-    print('Dates before current date:')
-    for ent in reporter.dates_before_current_date():
-        print(ent)
+#     print('Dates before current date:')
+#     for ent in reporter.dates_before_current_date():
+#         print(ent)
+#
+#     print('Divorce before death:')
+#     for fam in reporter.divorce_before_death():
+#         print(fam)
 
-    print('Divorce before death:')
-    for fam in reporter.divorce_before_death():
-        print(fam)
-        
     print('Individuals over 150:')
     for ind in reporter.less_than_150_years_old():
+        print(ind)
+
+    print('Individuals born before marriage or after divorce of parents:')
+    for ind in reporter.birth_before_marriage_of_parents():
         print(ind)
 
 if __name__ == '__main__':

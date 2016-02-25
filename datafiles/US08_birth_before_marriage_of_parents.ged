@@ -1,0 +1,64 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US08: Birth before marriage of parents
+1 NOTE Child should be born after marriage of parents (and before their
+1 NOTE divorce)
+1 NOTE ************************
+0 @I1@ INDI
+1 NAME Father //
+1 SEX M
+1 BIRT
+2 DATE 16 FEB 1967
+1 NOTE ========================
+0 @I2@ INDI
+1 NAME Mother //
+1 SEX F
+1 BIRT
+2 DATE 1 FEB 1970
+1 NOTE ========================
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I11@
+1 CHIL @I12@
+1 CHIL @I13@
+1 CHIL @I14@
+1 MARR
+2 DATE 20 JUL 1990
+1 DIV
+2 DATE 12 SEP 1993
+1 NOTE ========================
+0 @I11@ INDI
+1 NAME Born /BeforeMarriage/
+1 SEX M
+1 BIRT
+2 DATE 19 JUL 1990
+1 FAMC @F1@
+1 NOTE ========================
+0 @I12@ INDI
+1 NAME Born /AfterMarriage/
+1 SEX M
+1 BIRT
+2 DATE 20 JUL 1990
+1 FAMC @F1@
+1 NOTE ========================
+0 @I13@ INDI
+1 NAME Born /BeforeDivorce/
+1 SEX M
+1 BIRT
+2 DATE 12 SEP 1993
+1 FAMC @F1@
+1 NOTE ========================
+0 @I14@ INDI
+1 NAME Born /AfterDivorce/
+1 SEX M
+1 BIRT
+2 DATE 13 SEP 1993
+1 FAMC @F1@
+1 NOTE ========================
+0 TRLR
