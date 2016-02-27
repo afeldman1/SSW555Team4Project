@@ -71,6 +71,38 @@ class GedReporter(object):
                 yield ind
             elif divorced and divorced < born:
                 yield ind
+    
+    def marriage_before_divorce(self):
+        """
+            US04: Marriage before divorce
+            Marriage should only occur before divorce of spouses, and divorce can only
+            occur after marriage
+        """
+        for fam in self._fams.values():
+            if fam.marriage_date and not fam.divorce_date:
+                continue
+            if fam.marriage_date > fam.divorce_date:
+                yield fam
+                
+    
+    def marriage_before_death(self):
+        """
+            US05: Marriage before death
+            Marriage should occur before death of either spouse
+        """
+        
+        for fam in self._fams.values():
+            if fam.marriage_date is None:
+                continue
+            if not self._inds[fam.wife].death_date:
+                continue
+            if not self._inds[fam.husband].death_date:
+                continue
+            if self._inds[fam.wife].death_date > fam.marriage_date:
+                yield self._inds[fam.wife]
+            if self._inds[fam.husband].death_date > fam.marriage_date:
+                yield self._inds[fam.husband]    
+   
             
 def _calc_age(ind):
     """
@@ -85,3 +117,5 @@ def _calc_age(ind):
     
     offset = int((end_date.month, end_date.day) < (born.month, born.day))
     return end_date.year - born.year - offset
+
+

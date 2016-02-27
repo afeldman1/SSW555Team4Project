@@ -108,9 +108,9 @@ def main():
     for ent in reporter.dates_before_current_date():
         print(ent)
 #
-#     print('Divorce before death:')
-#     for fam in reporter.divorce_before_death():
-#         print(fam)
+    #print('Divorce before death:')
+    #for fam in reporter.divorce_before_death():
+    #    print(fam)
 
     print('Individuals over 150:')
     for ind in reporter.less_than_150_years_old():
@@ -119,6 +119,14 @@ def main():
     print('Individuals born before marriage or after divorce of parents:')
     for ind in reporter.birth_before_marriage_of_parents():
         print(ind)
+
+    print('Individuals divorced before married:')
+    for fam in  reporter.marriage_before_divorce():
+        print(fam)
+        
+    print('Individuals married before death of spouse:')
+    for fam in  reporter.marriage_before_death():
+        print(fam)
 
 if __name__ == '__main__':
     main()
