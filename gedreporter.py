@@ -102,7 +102,7 @@ class GedReporter(object):
             occur after marriage
         """
         for fam in self._fams.values():
-            if fam.marriage_date and not fam.divorce_date:
+            if not fam.marriage_date or not fam.divorce_date:
                 continue
             if fam.marriage_date > fam.divorce_date:
                 yield fam

@@ -1,0 +1,41 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US04: Marriage Before Divorce
+1 NOTE Dates (birth, marriage, divorce, death) 
+1 NOTE ************************
+0 @I1@ INDI
+1 NAME PAR1
+1 SEX M
+1 FAMS @F1@
+1 BIRT
+2 DATE 1 JAN 2070
+1 NOTE ========================
+0 @I2@ INDI
+1 NAME PAR2
+1 SEX F
+1 FAMS @F1@
+1 BIRT
+2 DATE 1 FEB 2010
+1 DEAT
+2 DATE 1 FEB 3000
+1 NOTE ========================
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 MARR 
+2 DATE 20 JUL 2100
+1 NOTE ========================
+0 @F2@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 MARR 24 FEB 2015
+2 DATE 20 JUL 2010
+1 DIV  24 FEB 2013
+2 DATE 20 JUL 2099
+1 NOTE ========================
+0 TRLR
