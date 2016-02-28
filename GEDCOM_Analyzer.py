@@ -107,6 +107,15 @@ def main():
     print('Dates before current date:')
     for ent in reporter.dates_before_current_date():
         print(ent)
+
+    print('Birth before marriage:')
+    for ind in reporter.birth_before_marriage():
+        print (ind)
+    
+    print('Birth before death:')
+    for ind in reporter.birth_before_death():
+        print (ind)
+
 #
     #print('Divorce before death:')
     #for fam in reporter.divorce_before_death():

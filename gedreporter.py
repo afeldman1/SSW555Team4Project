@@ -32,6 +32,29 @@ class GedReporter(object):
         """
         return filter(lambda ind: ind.birthday > date.today() if ind.birthday else False and ind.death_date > date.today() if ind.death_date else False, self._inds.values()) and filter(lambda fam: fam.marriage_date > date.today() if fam.marriage_date else False and fam.divorce_date > date.today() if fam.divorce_date else False, self._fams.values())
 
+    def birth_before_marriage(self):
+        """
+            US02: Birth before marriage
+            Birth should occur before marriage of an individual
+        """
+        for ind in self._inds.values():
+            if not ind.family_in_law is None:           
+                birthday = ind.birthday
+                marriage = self._fams[ind.family_in_law].marriage_date
+                if not marriage is None:
+                    if marriage < birthday:
+                        yield ind
+
+    def birth_before_death(self):
+        """
+            US03: Birth before death
+            Birth should occur before death of an individual
+        """
+        for ind in self._inds.values():
+            if not ind.death_date is None:           
+                if ind.death_date < ind.birthday:
+                        yield ind
+
     def divorce_before_death(self):
         """
             US06: Divorce before death
