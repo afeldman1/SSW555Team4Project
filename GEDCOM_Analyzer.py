@@ -116,10 +116,9 @@ def main():
     for ind in reporter.birth_before_death():
         print (ind)
 
-#
-    #print('Divorce before death:')
-    #for fam in reporter.divorce_before_death():
-    #    print(fam)
+    print('Divorce before death:')
+    for fam in reporter.divorce_before_death():
+        print(fam)
 
     print('Individuals over 150:')
     for ind in reporter.less_than_150_years_old():

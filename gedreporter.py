@@ -30,7 +30,21 @@ class GedReporter(object):
             Dates (birth, marriage, divorce, death) should not be after the
             current date
         """
-        return filter(lambda ind: ind.birthday > date.today() if ind.birthday else False and ind.death_date > date.today() if ind.death_date else False, self._inds.values()) and filter(lambda fam: fam.marriage_date > date.today() if fam.marriage_date else False and fam.divorce_date > date.today() if fam.divorce_date else False, self._fams.values())
+        for ind in self._inds.values():
+            if ind.birthday:
+                if ind.birthday > date.today():
+                    yield ind;
+            if ind.death_date:
+                if ind.death_date > date.today():
+                    yield ind;
+
+        for fam in self._fams.values():
+            if fam.marriage_date:
+                if fam.marriage_date > date.today():
+                    yield fam;
+            if fam.divorce_date:
+                if fam.divorce_date > date.today():
+                    yield fam;
 
     def birth_before_marriage(self):
         """
@@ -38,7 +52,7 @@ class GedReporter(object):
             Birth should occur before marriage of an individual
         """
         for ind in self._inds.values():
-            if not ind.family_in_law is None:           
+            if not ind.family_in_law is None:
                 birthday = ind.birthday
                 marriage = self._fams[ind.family_in_law].marriage_date
                 if not marriage is None:
@@ -51,7 +65,7 @@ class GedReporter(object):
             Birth should occur before death of an individual
         """
         for ind in self._inds.values():
-            if not ind.death_date is None:           
+            if not ind.death_date is None:
                 if ind.death_date < ind.birthday:
                         yield ind
 
@@ -60,7 +74,10 @@ class GedReporter(object):
             US06: Divorce before death
             Divorce can only occur before death of both spouses
         """
-        return filter(lambda fam: fam.divorce_date > fam.husband.death_date if fam.divorce_date and fam.husband.death_date else False and fam.divorce_date > fam.wife.death_date if fam.divorce_date and fam.wife.death_date else False, self._fams.values())
+        for ind in self._inds.values():
+            if ind.family_in_law and self._fams[ind.family_in_law].divorce_date and ind.death_date:
+                if self._fams[ind.family_in_law].divorce_date > ind.death_date:
+                    yield ind
 
     def less_than_150_years_old(self):
         """
@@ -140,5 +157,3 @@ def _calc_age(ind):
     
     offset = int((end_date.month, end_date.day) < (born.month, born.day))
     return end_date.year - born.year - offset
-
-
