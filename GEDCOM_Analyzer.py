@@ -134,7 +134,7 @@ def main():
         print(fam)
         
     print('Individuals married before death of spouse:')
-    for fam in  reporter.marriage_before_death():
+    for fam in reporter.marriage_before_death():
         print(fam)
 
 if __name__ == '__main__':
