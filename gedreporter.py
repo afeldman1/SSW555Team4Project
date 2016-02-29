@@ -65,7 +65,7 @@ class GedReporter(object):
             Birth should occur before death of an individual
         """
         for ind in self._inds.values():
-            if not ind.death_date is None:
+            if not ind.death_date is None and ind.birthday:
                 if ind.death_date < ind.birthday:
                         yield ind
 
