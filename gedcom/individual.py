@@ -65,6 +65,10 @@ class Individual(GedObject):
     @death_date.setter
     def death_date(self, death_date):
         self._death_date = death_date
+
+    @property
+    def short_repr(self):
+        return '{name} {uid}'.format(name = self.name, uid = self.uid)
         
     def __repr__(self):
         return 'Individual{uid}({name}, {sex}, {fam}, {inlaw}, {birth}..{death})'.format(

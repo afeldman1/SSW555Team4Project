@@ -1,0 +1,47 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US12: Parents not too old
+1 NOTE Mother should be less than 60 years older than her children and
+1 NOTE father should be less than 80 years older than his children.
+1 NOTE ************************
+0 @I1@ INDI
+1 NAME Father /ofTheFamily/
+1 SEX M
+1 BIRT
+2 DATE 15 FEB 1920
+1 NOTE ========================
+0 @I2@ INDI
+1 NAME Mother /ofTheFamily/
+1 SEX F
+1 BIRT
+2 DATE 15 FEB 1940
+1 NOTE ========================
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I11@
+1 CHIL @I12@
+1 MARR
+2 DATE 20 JUL 1960
+1 NOTE ========================
+0 @I11@ INDI
+1 NAME Born /justInTime/
+1 SEX M
+1 BIRT
+2 DATE 14 FEB 2000
+1 FAMC @F1@
+1 NOTE ========================
+0 @I12@ INDI
+1 NAME Born /tooLate/
+1 SEX M
+1 BIRT
+2 DATE 15 FEB 2000
+1 FAMC @F1@
+1 NOTE ========================
+1 NOTE ========================
+0 TRLR

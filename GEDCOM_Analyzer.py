@@ -135,6 +135,10 @@ def main():
     print('Individuals married before death of spouse:')
     for fam in reporter.marriage_before_death():
         print(fam)
+        
+    for (child, year_diff, which_parent, parent) in reporter.parents_not_too_old():
+        print('Anomaly US12: Individual {child} was born {years} years after {which_parent} {parent} was born.\n'.format(
+            child = child.short_repr, years = year_diff, which_parent = which_parent, parent = parent.short_repr ))
 
 if __name__ == '__main__':
     main()
