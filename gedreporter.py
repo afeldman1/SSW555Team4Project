@@ -127,21 +127,22 @@ class GedReporter(object):
         """
         for ind in self._inds.values():
 
-            if not ind.family_by_blood:
+            fam = self._blood_family_of(ind)
+        
+            if not fam:
                 # skip over orphans
                 continue
 
             born = ind.birthday
-            fam = self._fams[ind.family_by_blood]
-            married = self._fams[ind.family_by_blood].marriage_date
-            divorced = self._fams[ind.family_by_blood].divorce_date
+            married = fam.marriage_date
+            divorced = fam.divorce_date
 
             if not married:
-                pass
-            elif born < married:
-                yield ind
-            elif divorced and divorced < born:
-                yield ind
+                continue
+            if born < married:
+                yield (ind, 'before marriage', fam)
+            if divorced and divorced < born:
+                yield (ind, 'after divorce', fam)
 
     def parents_not_too_old(self):
         """
