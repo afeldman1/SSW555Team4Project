@@ -60,6 +60,10 @@ class Family(GedObject):
     def divorce_date(self, divorce_date):
         self._divorce_date = divorce_date
         
+    @property
+    def short_repr(self):
+        return 'Family {uid}'.format(uid = self.uid)
+        
     def __repr__(self):
         return 'Family{uid}({husband} & {wife}, {marriage}..{divorce})'.format(
                 uid = self.uid,

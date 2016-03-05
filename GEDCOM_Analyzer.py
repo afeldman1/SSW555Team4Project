@@ -35,39 +35,36 @@ def main():
         print("%s %s %s" % (key, husband_name, wife_name))
     print('')
 
-    print('Dates before current date:')
-    for ent in reporter.dates_before_current_date():
-        print(ent)
+    for (ent, event) in reporter.dates_before_current_date():
+        print('Error US01: {ent} {event} occurs after today.\n'.format(ent = ent.short_repr, event = event))
 
-    print('Birth before marriage:')
-    for ind in reporter.birth_before_marriage():
-        print (ind)
+    for (ind, fam) in reporter.birth_before_marriage():
+        print('Error US02: {ind} was born after marriage into {fam}.\n'.format(
+                ind = ind.short_repr, fam = fam.short_repr))
 
-    print('Birth before death:')
     for ind in reporter.birth_before_death():
-        print (ind)
+        print('Error US03: {} died before they were born.\n'.format(ind.short_repr))
 
-    print('Divorce before death:')
-    for fam in reporter.divorce_before_death():
-        print(fam)
+    for fam in reporter.marriage_before_divorce():
+        print('Error US04: {} marriage date occurs after divorce date.\n'.format(fam.short_repr))
+
+    for (ind, fam) in reporter.marriage_before_death():
+        print('Error US05: {ind} died before marriage into {fam}.\n'.format(
+                ind = ind.short_repr, fam = fam.short_repr))
+
+    for (ind, fam) in reporter.marriage_before_death():
+        print('Error US06: {ind} died before divorce from {fam}.\n'.format(
+                ind = ind.short_repr, fam = fam.short_repr))
 
     for ind in reporter.less_than_150_years_old():
-        print('Error US07: Individual {} is >= 150 years old.\n'.format(ind.short_repr))
+        print('Error US07: {} is >= 150 years old.\n'.format(ind.short_repr))
 
     for (child, when, family) in reporter.birth_before_marriage_of_parents():
-        print('Anomaly US08: Individual {child} was born {when} of parents in Family {family_uid}.\n'.format(
-            child = child.short_repr, when = when, family_uid = family.uid ))
-
-    print('Individuals divorced before married:')
-    for fam in  reporter.marriage_before_divorce():
-        print(fam)
-
-    print('Individuals married before death of spouse:')
-    for fam in reporter.marriage_before_death():
-        print(fam)
+        print('Anomaly US08: {child} was born {when} of parents in {family_uid}.\n'.format(
+            child = child.short_repr, when = when, family_uid = family.short_repr ))
 
     for (child, year_diff, which_parent, parent) in reporter.parents_not_too_old():
-        print('Anomaly US12: Individual {child} was born {years} years after {which_parent} {parent} was born.\n'.format(
+        print('Anomaly US12: {child} was born {years} years after {which_parent} {parent} was born.\n'.format(
             child = child.short_repr, years = year_diff, which_parent = which_parent, parent = parent.short_repr ))
 
 

@@ -33,18 +33,18 @@ class GedReporter(object):
         for ind in self._inds.values():
             if ind.birthday:
                 if ind.birthday > date.today():
-                    yield ind;
+                    yield (ind, 'birthday');
             if ind.death_date:
                 if ind.death_date > date.today():
-                    yield ind;
+                    yield (ind, 'death date');
 
         for fam in self._fams.values():
             if fam.marriage_date:
                 if fam.marriage_date > date.today():
-                    yield fam;
+                    yield (fam, 'marriage date');
             if fam.divorce_date:
                 if fam.divorce_date > date.today():
-                    yield fam;
+                    yield (fam, 'divorce date');
 
     def birth_before_marriage(self):
         """
@@ -57,7 +57,7 @@ class GedReporter(object):
                 marriage = self._fams[ind.family_in_law].marriage_date
                 if not marriage is None:
                     if marriage < birthday:
-                        yield ind
+                        yield (ind, self._fams[ind.family_in_law])
 
     def birth_before_death(self):
         """
@@ -79,10 +79,7 @@ class GedReporter(object):
             if not fam.marriage_date or not fam.divorce_date:
                 continue
             if fam.marriage_date > fam.divorce_date:
-                yield self._inds[fam.wife]
-                yield self._inds[fam.husband]
-                #yield fam
-
+                yield fam
 
     def marriage_before_death(self):
         """
@@ -95,10 +92,10 @@ class GedReporter(object):
                 continue
             if self._inds[fam.wife].death_date is not None:
                 if self._inds[fam.wife].death_date < fam.marriage_date:
-                    yield self._inds[fam.wife]
+                    yield (self._inds[fam.wife], fam)
             if self._inds[fam.husband].death_date is not None:
                 if self._inds[fam.husband].death_date < fam.marriage_date:
-                    yield self._inds[fam.husband]
+                    yield (self._inds[fam.husband], fam)
 
     def divorce_before_death(self):
         """
@@ -108,7 +105,7 @@ class GedReporter(object):
         for ind in self._inds.values():
             if ind.family_in_law and self._fams[ind.family_in_law].divorce_date and ind.death_date:
                 if self._fams[ind.family_in_law].divorce_date > ind.death_date:
-                    yield ind
+                    yield (ind, self._fams[ind.family_in_law])
 
     def less_than_150_years_old(self):
         """
