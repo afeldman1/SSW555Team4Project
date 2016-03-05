@@ -5,6 +5,8 @@
 """
 
 from datetime import date
+from datetime import timedelta
+import itertools
 
 class GedReporter(object):
     """
@@ -161,8 +163,19 @@ class GedReporter(object):
                 if father_age_diff >= 80:
                     yield (ind, father_age_diff, 'father', father)
             
-            
-            
+    def siblings_spacing(self):
+        """
+            US13: Siblings spacing
+            Birth dates of siblings should be more than 8 months apart or less
+            than 2 days apart.
+        """
+        for fam in self._fams.values():
+            children = [self._inds[ind_uid] for ind_uid in fam.children]
+            for (child1, child2) in itertools.combinations(children, 2):
+                # For convenience, 1 month = 30 days.
+                if timedelta(2) < abs(child2.birthday - child1.birthday) < timedelta(241):
+                    yield (child1, child2)
+        
         
     # Some helper methods to perform common operations on individuals and
     # families.

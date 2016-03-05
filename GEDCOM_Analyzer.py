@@ -67,6 +67,9 @@ def main():
         print('Anomaly US12: {child} was born {years} years after {which_parent} {parent} was born.\n'.format(
             child = child.short_repr, years = year_diff, which_parent = which_parent, parent = parent.short_repr ))
 
+    for (sibling1, sibling2) in reporter.siblings_spacing():
+        print('Anomaly US13: Siblings {sibling1} and {sibling2} were born less than 8 months apart.\n'.format(
+            sibling1 = sibling1.short_repr, sibling2 = sibling2.short_repr ))        
 
 if __name__ == '__main__':
     main()

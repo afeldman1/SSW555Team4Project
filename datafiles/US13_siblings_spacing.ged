@@ -1,0 +1,72 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US13: Siblings spacing
+1 NOTE Birth dates of siblings should be more than 8 months apart or less than
+1 NOTE 2 days apart.
+1 NOTE ************************
+0 @I1@ INDI
+1 NAME Father //
+1 SEX M
+1 BIRT
+2 DATE 16 FEB 1967
+1 NOTE ========================
+0 @I2@ INDI
+1 NAME Mother //
+1 SEX F
+1 BIRT
+2 DATE 1 FEB 1970
+1 NOTE ========================
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I11@
+1 CHIL @I12@
+1 CHIL @I13@
+1 CHIL @I14@
+1 CHIL @I15@
+1 MARR
+2 DATE 20 JUL 1990
+1 DIV
+2 DATE 12 SEP 1993
+1 NOTE ========================
+0 @I11@ INDI
+1 NAME Oldest /Brother/
+1 SEX M
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I12@ INDI
+1 NAME Close /Triplet/
+1 SEX F
+1 BIRT
+2 DATE 3 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I13@ INDI
+1 NAME Far /Triplet/
+1 SEX M
+1 BIRT
+2 DATE 4 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I14@ INDI
+1 NAME Near /Sibling/
+1 SEX F
+1 BIRT
+2 DATE 27 OCT 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I15@ INDI
+1 NAME Far /Sibling/
+1 SEX F
+1 BIRT
+2 DATE 28 OCT 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 TRLR
