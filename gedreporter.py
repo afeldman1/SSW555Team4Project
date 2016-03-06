@@ -6,6 +6,7 @@
 
 from datetime import date
 from datetime import timedelta
+from dateutil.relativedelta import relativedelta
 import itertools
 
 class GedReporter(object):
@@ -35,18 +36,18 @@ class GedReporter(object):
         for ind in self._inds.values():
             if ind.birthday:
                 if ind.birthday > date.today():
-                    yield (ind, 'birthday');
+                    yield (ind, 'birthday')
             if ind.death_date:
                 if ind.death_date > date.today():
-                    yield (ind, 'death date');
+                    yield (ind, 'death date')
 
         for fam in self._fams.values():
             if fam.marriage_date:
                 if fam.marriage_date > date.today():
-                    yield (fam, 'marriage date');
+                    yield (fam, 'marriage date')
             if fam.divorce_date:
                 if fam.divorce_date > date.today():
-                    yield (fam, 'divorce date');
+                    yield (fam, 'divorce date')
 
     def birth_before_marriage(self):
         """
@@ -88,7 +89,6 @@ class GedReporter(object):
             US05: Marriage before death
             Marriage should occur before death of either spouse
         """
-
         for fam in self._fams.values():
             if fam.marriage_date is None:
                 continue
@@ -143,6 +143,19 @@ class GedReporter(object):
             if divorced and divorced < born:
                 yield (ind, 'after divorce', fam)
 
+    def marriage_after_14(self):
+        """
+            US10: Marriage after 14
+            Marriage should be at least 14 years after birth of both spouses
+        """
+        for fam in self._fams.values():
+            if fam.marriage_date and self._inds[fam.wife].birthday and relativedelta(
+                    fam.marriage_date, self._inds[fam.wife].birthday).years < 14:
+                yield fam.wife;
+            if fam.marriage_date and self._inds[fam.husband].birthday and relativedelta(
+                    fam.marriage_date, self._inds[fam.husband].birthday).years < 14:
+                yield fam.husband;
+
     def parents_not_too_old(self):
         """
             US12: Parents not too old
@@ -175,8 +188,25 @@ class GedReporter(object):
                 # For convenience, 1 month = 30 days.
                 if timedelta(2) < abs(child2.birthday - child1.birthday) < timedelta(241):
                     yield (child1, child2)
-        
-        
+
+    def male_last_names(self):
+        """
+            US16: Male last names
+            All male members of a family should have the same last name
+        """
+        for fam in self._fams.values():
+            surname = next((ind.name.rsplit(" ", 1)[1] for ind in self._inds.values() if ind.sex == 'M' and (
+                ind.family_by_blood == fam.uid or ind.family_in_law == fam.uid) and
+                            len(ind.name.rsplit(" ", 1)) == 2), None)
+
+            if surname is None:
+                continue
+
+            for ind in self._inds.values():
+                if (ind.sex == 'M' and (ind.family_by_blood == fam.uid or ind.family_in_law == fam.uid) and
+                            surname != ind.name.rsplit(" ", 1)[1]):
+                    yield (ind, fam)
+
     # Some helper methods to perform common operations on individuals and
     # families.
         
