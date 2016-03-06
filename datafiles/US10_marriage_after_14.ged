@@ -1,0 +1,63 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US10: Marriage after 14
+1 NOTE Marriage should be at least 14 years after birth of both spouses
+1 NOTE ************************
+1 SUBM @I1@
+2 NAME Adam Feldman
+1 SUBN
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Adam /Feldman/
+2 GIVN Adam
+2 SURN Feldman
+2 _MARNM Feldman
+1 SEX M
+1 BIRT
+2 DATE 7 FEB 1999
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Sam /Feldman/
+2 GIVN Sam
+2 SURN Feldman
+2 _MARNM Feldman
+1 SEX F
+1 BIRT
+2 DATE 6 MAR 2000
+1 FAMS @F1@
+0 @I3@ INDI
+1 NAME John
+2 GIVN John
+1 SEX M
+1 BIRT
+2 DATE 6 MAR 2010
+1 FAMS @F2@
+1 FAMC @F1@
+0 @I4@ INDI
+1 NAME Kim
+2 GIVN Kim
+1 SEX F
+1 BIRT
+2 DATE 7 JUN 2012
+1 FAMS @F2@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I3@
+1 MARR
+2 DATE 4 MAR 2014
+1 EVEN
+2 TYPE Ending
+1 _CURRENT N
+0 @F2@ FAM
+1 HUSB @I3@
+1 WIFE @I4@
+1 MARR
+2 DATE 6 APR 2016
+1 _CURRENT Y
+0 TRLR
