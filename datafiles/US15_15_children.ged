@@ -1,0 +1,152 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US14: Multiple births less than 5
+1 NOTE No more than 5 siblings should be born 
+1 NOTE at the same time
+1 NOTE ************************
+0 @I1@ INDI
+1 NAME Father //
+1 SEX M
+1 BIRT
+2 DATE 16 FEB 1967
+1 NOTE ========================
+0 @I2@ INDI
+1 NAME Mother //
+1 SEX F
+1 BIRT
+2 DATE 1 FEB 1970
+1 NOTE ========================
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I11@
+1 CHIL @I12@
+1 CHIL @I13@
+1 CHIL @I14@
+1 CHIL @I15@
+1 CHIL @I16@
+1 CHIL @I17@
+1 CHIL @I18@
+1 CHIL @I19@
+1 CHIL @I20@
+1 CHIL @I21@
+1 CHIL @I22@
+1 CHIL @I23@
+1 CHIL @I24@
+1 CHIL @I25@
+1 MARR
+2 DATE 20 JUL 1990
+1 DIV
+2 DATE 12 SEP 1993
+1 NOTE ========================
+0 @I11@ INDI
+1 NAME One
+1 SEX M
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I12@ INDI
+1 NAME Two
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I13@ INDI
+1 NAME Three
+1 SEX M
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I14@ INDI
+1 NAME Four
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I15@ INDI
+1 NAME Five
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I16@ INDI
+1 NAME Six
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I17@ INDI
+1 NAME Seven
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I18@ INDI
+1 NAME Eight
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I19@ INDI
+1 NAME Nine
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I20@ INDI
+1 NAME Ten
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I21@ INDI
+1 NAME Eleven
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I22@ INDI
+1 NAME Twelve
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I23@ INDI
+1 NAME Thirteen
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I24@ INDI
+1 NAME Fourteen
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I25@ INDI
+1 NAME Fifteen
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 TRLR

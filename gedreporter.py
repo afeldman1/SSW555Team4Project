@@ -188,7 +188,39 @@ class GedReporter(object):
                 # For convenience, 1 month = 30 days.
                 if timedelta(2) < abs(child2.birthday - child1.birthday) < timedelta(241):
                     yield (child1, child2)
-
+                    
+    
+    def mult_births_less_five(self):
+        """
+            US14: Multiple births less than 5
+            No more than five siblings should be born at the same time
+        """
+        
+        for fam in self._fams.values():
+            
+            individuals = [x for x in fam.children]
+            
+            birthdays = [x.birthday for x in [self._inds[x] for x in individuals]]
+            
+            atleast_5 = set([x for x in birthdays if birthdays.count(x) >=5])
+            
+            if atleast_5:
+                yield fam
+            
+            
+            
+            
+    def fewer_than_15(self):
+        """
+            US15: Fewer than 15 siblings
+            No more than five siblings should be born at the same time
+        """
+        
+        for fam in self._fams.values():
+            if len(fam.children) >= 14:
+                yield fam
+            
+        
     def male_last_names(self):
         """
             US16: Male last names

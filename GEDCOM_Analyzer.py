@@ -74,6 +74,12 @@ def main():
     for (sibling1, sibling2) in reporter.siblings_spacing():
         print('Anomaly US13: Siblings {sibling1} and {sibling2} were born less than 8 months apart.\n'.format(
             sibling1 = sibling1.short_repr, sibling2 = sibling2.short_repr ))
+        
+    for fam in reporter.mult_births_less_five():
+        print ('Anomaly US14: Family {fam} had 5 or more children born at the same time. \n'.format( fam = fam.short_repr))
+        
+    for fam in reporter.fewer_than_15():
+        print ('Anomaly US15: Family {fam} has 15 or more siblings. \n'.format( fam = fam.short_repr))
 
     for (ind, fam) in reporter.male_last_names():
         print('Anomaly US16: {ind} is a male'.format(ind=ind.short_repr) +
