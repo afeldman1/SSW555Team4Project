@@ -142,6 +142,33 @@ class GedReporter(object):
                 yield (ind, 'before marriage', fam)
             if divorced and divorced < born:
                 yield (ind, 'after divorce', fam)
+                
+    def birth_before_death_of_parents(self):
+        """"
+            US09: Birth before death of parents
+            Child should be born before death of mother and before 9 months
+            after death of father
+        """
+        for ind in self._inds.values():
+            
+            fam = self._blood_family_of(ind)
+            
+            if not fam:
+                continue
+            
+            born = ind.birthday
+            mother = fam.wife
+            if self._inds[mother].death_date:
+                #mdate = datetime.strptime(mother.death_date, '%d/%m/%Y')
+                if born > self._inds[mother].death_date:
+                    yield (ind, 'after', self._inds[mother])
+            
+            father = fam.husband
+            if self._inds[father].death_date:
+                #fdate = datetime.strptime(father.death_date, '%d/%m/%Y')
+                if relativedelta(born, self._inds[father].death_date).months > 9:
+                    yield (ind, 'more than nine months after', self._inds[father])
+
 
     def marriage_after_14(self):
         """
@@ -155,6 +182,28 @@ class GedReporter(object):
             if fam.marriage_date and self._inds[fam.husband].birthday and relativedelta(
                     fam.marriage_date, self._inds[fam.husband].birthday).years < 14:
                 yield fam.husband;
+
+    def bigamy(self):
+        """
+            US11: No bigamy
+            Marriage should not occur during marriage to another spouse
+        """
+        for (family1, family2) in itertools.combinations(self._fams.values(),2):
+            if family1.husband == family2.husband:
+                if ((not family1.divorce_date and not family2.divorce_date)
+                    or ((family1.divorce_date and not family2.divorce_date) and family2.marriage_date < family1.divorce_date)
+                    or ((family2.divorce_date and not family1.divorce_date) and family1.marriage_date < family2.divorce_date)
+                    or (family1.marriage_date <= family2.divorce_date and family2.marriage_date <= family1.divorce_date) or (family2.marriage_date <= family1.divorce_date and family1.marriage_date <=family2.divorce_date)):
+
+                    yield (self._inds[family1.husband], self._inds[family1.wife], self._inds[family2.wife])
+            
+            if family1.wife == family2.wife:
+                if ((not family1.divorce_date and not family2.divorce_date)
+                    or ((family1.divorce_date and not family2.divorce_date) and family2.marriage_date < family1.divorce_date)
+                    or ((family2.divorce_date and not family1.divorce_date) and family1.marriage_date < family2.divorce_date)
+                    or (family1.marriage_date <= family2.divorce_date and family2.marriage_date <= family1.divorce_date) or (family2.marriage_date <= family1.divorce_date and family1.marriage_date <=family2.divorce_date)):
+
+                    yield (self._inds[family1.wife], self._inds[family1.husband], self._inds[family2.husband])
 
     def parents_not_too_old(self):
         """

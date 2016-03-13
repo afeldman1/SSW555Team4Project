@@ -63,10 +63,18 @@ def main():
         print('Anomaly US08: {child} was born {when} of parents in {family_uid}.\n'.format(
             child = child.short_repr, when = when, family_uid = family.short_repr ))
 
+    for (child, when, parent) in reporter.birth_before_death_of_parents():
+        print('Error US09: {child} was born {when} {parent} died.\n'.format(
+            child = child.short_repr, when = when, parent = parent))
+
     for ind in reporter.marriage_after_14():
         print('Error US10: {spouse} birth date occurs fewer than 14 years before marriage date.\n'.format(
             spouse=ind.short_repr))
 
+    for (ind, spouse1, spouse2) in reporter.bigamy():
+        print('Anomaly US011: {ind} was married to {spouse1} and {spouse2} concurrently.\n'.format(
+            ind = ind.short_repr, spouse1 = spouse1.short_repr, spouse2 = spouse2.short_repr))
+            
     for (child, year_diff, which_parent, parent) in reporter.parents_not_too_old():
         print('Anomaly US12: {child} was born {years} years after {which_parent} {parent} was born.\n'.format(
             child = child.short_repr, years = year_diff, which_parent = which_parent, parent = parent.short_repr ))
