@@ -159,13 +159,11 @@ class GedReporter(object):
             born = ind.birthday
             mother = fam.wife
             if self._inds[mother].death_date:
-                #mdate = datetime.strptime(mother.death_date, '%d/%m/%Y')
                 if born > self._inds[mother].death_date:
                     yield (ind, 'after', self._inds[mother])
             
             father = fam.husband
             if self._inds[father].death_date:
-                #fdate = datetime.strptime(father.death_date, '%d/%m/%Y')
                 if relativedelta(born, self._inds[father].death_date).months > 9:
                     yield (ind, 'more than nine months after', self._inds[father])
 
