@@ -70,7 +70,7 @@ class GedReporter(object):
         for ind in self._inds.values():
             if not ind.death_date is None and ind.birthday:
                 if ind.death_date < ind.birthday:
-                        yield ind
+                    yield ind
 
     def marriage_before_divorce(self):
         """
@@ -127,7 +127,7 @@ class GedReporter(object):
         for ind in self._inds.values():
 
             fam = self._blood_family_of(ind)
-        
+
             if not fam:
                 # skip over orphans
                 continue
@@ -142,7 +142,7 @@ class GedReporter(object):
                 yield (ind, 'before marriage', fam)
             if divorced and divorced < born:
                 yield (ind, 'after divorce', fam)
-                
+
     def birth_before_death_of_parents(self):
         """"
             US09: Birth before death of parents
@@ -150,23 +150,22 @@ class GedReporter(object):
             after death of father
         """
         for ind in self._inds.values():
-            
+
             fam = self._blood_family_of(ind)
-            
+
             if not fam:
                 continue
-            
+
             born = ind.birthday
             mother = fam.wife
             if self._inds[mother].death_date:
                 if born > self._inds[mother].death_date:
                     yield (ind, 'after', self._inds[mother])
-            
+
             father = fam.husband
             if self._inds[father].death_date:
                 if relativedelta(born, self._inds[father].death_date).months > 9:
                     yield (ind, 'more than nine months after', self._inds[father])
-
 
     def marriage_after_14(self):
         """
@@ -176,10 +175,10 @@ class GedReporter(object):
         for fam in self._fams.values():
             if fam.marriage_date and self._inds[fam.wife].birthday and relativedelta(
                     fam.marriage_date, self._inds[fam.wife].birthday).years < 14:
-                yield fam.wife;
+                yield self._inds[fam.wife];
             if fam.marriage_date and self._inds[fam.husband].birthday and relativedelta(
                     fam.marriage_date, self._inds[fam.husband].birthday).years < 14:
-                yield fam.husband;
+                yield self._inds[fam.husband];
 
     def bigamy(self):
         """
@@ -194,7 +193,7 @@ class GedReporter(object):
                     or (family1.marriage_date <= family2.divorce_date and family2.marriage_date <= family1.divorce_date) or (family2.marriage_date <= family1.divorce_date and family1.marriage_date <=family2.divorce_date)):
 
                     yield (self._inds[family1.husband], self._inds[family1.wife], self._inds[family2.wife])
-            
+
             if family1.wife == family2.wife:
                 if ((not family1.divorce_date and not family2.divorce_date)
                     or ((family1.divorce_date and not family2.divorce_date) and family2.marriage_date < family1.divorce_date)
@@ -212,17 +211,17 @@ class GedReporter(object):
         for ind in self._inds.values():
             mother = self._mother_of(ind)
             father = self._father_of(ind)
-            
+
             if mother and father:
                 mother_age_diff = _year_diff(mother.birthday, ind.birthday)
                 father_age_diff = _year_diff(father.birthday, ind.birthday)
-            
+
                 if mother_age_diff >= 60:
                     yield (ind, mother_age_diff, 'mother', mother)
-                
+
                 if father_age_diff >= 80:
                     yield (ind, father_age_diff, 'father', father)
-            
+
     def siblings_spacing(self):
         """
             US13: Siblings spacing
@@ -235,39 +234,34 @@ class GedReporter(object):
                 # For convenience, 1 month = 30 days.
                 if timedelta(2) < abs(child2.birthday - child1.birthday) < timedelta(241):
                     yield (child1, child2)
-                    
-    
+
     def mult_births_less_five(self):
         """
             US14: Multiple births less than 5
             No more than five siblings should be born at the same time
         """
-        
+
         for fam in self._fams.values():
-            
+
             individuals = [x for x in fam.children]
-            
+
             birthdays = [x.birthday for x in [self._inds[x] for x in individuals]]
-            
+
             atleast_5 = set([x for x in birthdays if birthdays.count(x) >=5])
-            
+
             if atleast_5:
                 yield fam
-            
-            
-            
-            
+
     def fewer_than_15(self):
         """
             US15: Fewer than 15 siblings
             No more than five siblings should be born at the same time
         """
-        
+
         for fam in self._fams.values():
             if len(fam.children) >= 14:
                 yield fam
-            
-        
+
     def male_last_names(self):
         """
             US16: Male last names
@@ -282,13 +276,14 @@ class GedReporter(object):
                 continue
 
             for ind in self._inds.values():
-                if (ind.sex == 'M' and (ind.family_by_blood == fam.uid or ind.family_in_law == fam.uid) and
-                            surname != ind.name.rsplit(" ", 1)[1]):
+                if ind.sex == 'M' and (ind.family_by_blood == fam.uid or ind.family_in_law == fam.uid) and (
+                        len(ind.name.rsplit(" ", 1)) <= 1 or (
+                        len(ind.name.rsplit(" ", 1)) > 1 and surname != ind.name.rsplit(" ", 1)[1])):
                     yield (ind, fam)
 
     # Some helper methods to perform common operations on individuals and
     # families.
-        
+
     def _blood_family_of(self, ind):
         """
             Retrieves the family a child was born into.
@@ -297,14 +292,14 @@ class GedReporter(object):
             return self._fams[ind.family_by_blood]
         else:
             return None
-        
+
     def _mother_of(self, ind):
         """
             Retrieves the mother of an individual.
         """
         fam = self._blood_family_of(ind)
         return self._inds[fam.wife] if fam else None
-        
+
     def _father_of(self, ind):
         """
             Retrieves the father of an individual.
@@ -312,7 +307,7 @@ class GedReporter(object):
         fam = self._blood_family_of(ind)
         return self._inds[fam.husband] if fam else None
 
-            
+
 # Some static helper functions
 
 def _calc_age(ind):
@@ -328,6 +323,7 @@ def _calc_age(ind):
         end_date = ind.death_date if ind.death_date else date.today()
         return _year_diff(born, end_date)
 
+
 def _year_diff(start_date, end_date):
     """
         Calculates the amount of entire years passed from start date to end
@@ -335,5 +331,3 @@ def _year_diff(start_date, end_date):
     """
     offset = int((end_date.month, end_date.day) < (start_date.month, start_date.day))
     return end_date.year - start_date.year - offset
-
-
