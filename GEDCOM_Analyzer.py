@@ -93,5 +93,8 @@ def main():
         print('Anomaly US16: {ind} is a male'.format(ind=ind.short_repr) +
               " who's surname does not match his families, " + '{fam}.\n'.format(fam=fam.short_repr))
 
+    for ind in reporter.correct_gender_role():
+        print('Anomaly US21: Individual {ind} has an incorrect gender role. \n'.format(ind=ind.short_repr))
+
 if __name__ == '__main__':
     main()

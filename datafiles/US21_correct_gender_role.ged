@@ -1,0 +1,53 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US21: Correct gender for role
+1 NOTE Husband in family should be male and wife in family should be female
+1 NOTE ************************
+1 SUBM @I1@
+2 NAME Adam Feldman
+1 SUBN
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME John /Smith/
+2 GIVN John
+2 SURN Smith
+2 _MARNM Smith
+1 SEX M
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Jenn /Smith/
+2 GIVN Jenn
+2 SURN Smith
+2 _MARNM Smith
+1 SEX M
+1 FAMS @F1@
+0 @I3@ INDI
+1 NAME Sam /Smith/
+2 GIVN Sam
+2 SURN Smith
+2 _MARNM Smith
+1 SEX F
+1 FAMS @F2@
+1 FAMC @F1@
+0 @I4@ INDI
+1 NAME Mark /Smith/
+2 GIVN Mark
+2 SURN Smith
+2 _MARNM Smith
+1 SEX F
+1 FAMS @F2@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I3@
+1 _CURRENT Y
+0 @F2@ FAM
+1 HUSB @I4@
+1 WIFE @I3@
+1 _CURRENT Y
+0 TRLR
