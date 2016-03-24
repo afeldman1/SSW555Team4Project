@@ -281,6 +281,17 @@ class GedReporter(object):
                         len(ind.name.rsplit(" ", 1)) > 1 and surname != ind.name.rsplit(" ", 1)[1])):
                     yield (ind, fam)
 
+    def correct_gender_role(self):
+        """
+            US21: Correct gender for role
+            Husband in family should be male and wife in family should be female
+        """
+        for fam in self._fams.values():
+            if fam.husband and self._inds[fam.husband].sex != 'M':
+                yield (self._inds[fam.husband])
+            if fam.wife and self._inds[fam.wife].sex != 'F':
+                yield (self._inds[fam.wife])
+
     # Some helper methods to perform common operations on individuals and
     # families.
 
