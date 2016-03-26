@@ -1,0 +1,175 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE US23: Unique name and birth date
+1 NOTE No more than one individual with the same name and birth date
+1 NOTE should appear in a GEDCOM file.
+1 NOTE ************************
+1 SOUR Family Echo
+2 WWW http://www.familyecho.com/
+1 FILE My Family
+1 DATE 30 JAN 2016
+1 DEST ANSTFILE
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 SUBM @I3@
+2 NAME William
+1 SUBN
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME William /Costa/
+2 GIVN William
+2 SURN Costa
+1 SEX M
+1 BIRT
+2 DATE 16 FEB 1931
+1 DEAT Y
+2 DATE 2 DEC 1967
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Elise /Albrecht/
+2 GIVN Elise
+2 SURN Albrecht
+2 _MARNM Costa
+1 SEX F
+1 BIRT
+2 DATE 12 MAR 1936
+1 FAMS @F1@
+1 FAMS @F2@
+1 FAMC @F3@
+0 @I3@ INDI
+1 NAME Jacob /Costa/
+2 GIVN Jacob
+2 SURN Costa
+1 SEX M
+1 BIRT
+2 DATE 17 JAN 1962
+1 FAMS @F4@
+1 FAMC @F1@
+0 @I4@ INDI
+1 NAME Noah /Costa/
+2 GIVN Noah
+2 SURN Costa
+1 SEX M
+1 BIRT
+2 DATE 24 APR 1965
+1 FAMC @F1@
+0 @I5@ INDI
+1 NAME Aloysius /Albrecht/
+2 GIVN Aloysius
+2 SURN Albrecht
+1 SEX M
+1 BIRT
+2 DATE 10 FEB 1907
+1 DEAT Y
+2 DATE 12 APR 1935
+1 FAMS @F3@
+0 @I6@ INDI
+1 NAME Anna /Hoffmann/
+2 GIVN Anna
+2 SURN Hoffmann
+2 _MARNM Albrecht
+1 SEX F
+1 BIRT
+2 DATE 31 AUG 1912
+1 DEAT Y
+2 DATE 10 MAR 1936
+1 FAMS @F3@
+0 @I7@ INDI
+1 NAME Maximillian /Baum/
+2 GIVN Maximillian
+2 SURN Baum
+1 SEX M
+1 BIRT
+2 DATE 11 JAN 1929
+1 FAMS @F2@
+0 @I8@ INDI
+1 NAME Damien /Baum/
+2 GIVN Damien
+2 SURN Baum
+1 SEX M
+1 BIRT
+2 DATE 14 OCT 1974
+1 FAMC @F2@
+0 @I9@ INDI
+1 NAME Joachim /Albrecht/
+2 GIVN Joachim
+2 SURN Albrecht
+1 SEX M
+1 BIRT
+2 DATE 1 FEB 1940
+1 FAMS @F5@
+1 FAMC @F3@
+0 @I10@ INDI
+1 NAME Mary-Anne /Albrecht/
+2 GIVN Mary-Anne
+2 SURN Albrecht
+2 _MARNM Albrecht
+1 SEX F
+1 BIRT
+2 DATE 22 NOV 1947
+1 FAMS @F5@
+0 @I11@ INDI
+1 NAME Diana /Albrecht/
+2 GIVN Diana
+2 SURN Albrecht
+1 SEX F
+1 BIRT
+2 DATE 3 JUN 1977
+0 @I12@ INDI
+1 NAME Diana /Albrecht/
+2 GIVN Diana
+2 SURN Albrecht
+1 SEX F
+1 BIRT
+2 DATE 3 JUN 1977
+0 @I13@ INDI
+1 NAME Mary-Anne /Albrecht/
+2 GIVN Mary-Anne
+2 SURN Albrecht
+2 _MARNM Albrecht
+1 SEX F
+1 BIRT
+2 DATE 22 NOV 1947
+1 FAMS @F2@
+1 FAMC @F2@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I3@
+1 CHIL @I4@
+1 MARR
+2 DATE 7 SEP 1960
+1 EVEN
+2 TYPE Ending
+1 _CURRENT N
+0 @F2@ FAM
+1 HUSB @I7@
+1 WIFE @I2@
+1 CHIL @I8@
+1 MARR
+2 DATE 13 DEC 1971
+1 _CURRENT Y
+0 @F3@ FAM
+1 HUSB @I5@
+1 WIFE @I6@
+1 CHIL @I2@
+1 CHIL @I9@
+1 MARR
+2 DATE 16 JUN 1941
+1 _CURRENT Y
+0 @F4@ FAM
+1 HUSB @I3@
+1 _CURRENT N
+0 @F5@ FAM
+1 HUSB @I9@
+1 WIFE @I10@
+1 CHIL @I11@
+1 MARR
+2 DATE 20 JUL 1974
+1 _CURRENT Y
+0 TRLR

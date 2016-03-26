@@ -69,7 +69,24 @@ class GedReporterTest(unittest.TestCase):
         self.assertTrue(('@I11@', 'before marriage', '@F1@') in ids)
         self.assertFalse(('@I13@', 'after divorce', '@F1@') in ids)
         self.assertFalse(('@I12@', 'before marriage', '@F1@') in ids)
-
+        
+    def test_US19_first_cousins_should_not_marry(self):
+    
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US19_first_cousins_should_not_marry.ged')
+        reporter = GedReporter(inds, fams)
+        
+    def test_US23_unique_name_and_birth_date(self):
+    
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US23_unique_name_and_birth_date.ged')
+        reporter = GedReporter(inds, fams)
+        
+        # use a set because we want to ignore order when using equality
+        ids = [frozenset((ind1.uid, ind2.uid))
+                for (ind1, ind2)
+                in reporter.unique_name_and_birth_date()]
+                
+        self.assertTrue(frozenset(('@I12@', '@I11@')) in ids)
+        self.assertTrue(frozenset(('@I10@', '@I13@')) in ids)
 
 if __name__ == '__main__':
     

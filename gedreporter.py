@@ -291,6 +291,16 @@ class GedReporter(object):
                 yield (self._inds[fam.husband])
             if fam.wife and self._inds[fam.wife].sex != 'F':
                 yield (self._inds[fam.wife])
+                
+    def unique_name_and_birth_date(self):
+        """
+            US23: Unique name and birth date
+            No more than one individual with the same name and birth date
+            should appear in a GEDCOM file.
+        """
+        for (ind1, ind2) in itertools.combinations(self.individuals.values(), 2):
+            if ind1.name == ind2.name and ind1.birthday == ind2.birthday:
+                yield (ind1, ind2)
 
     # Some helper methods to perform common operations on individuals and
     # families.
