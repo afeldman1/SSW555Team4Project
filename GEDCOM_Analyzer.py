@@ -82,10 +82,10 @@ def main():
     for (sibling1, sibling2) in reporter.siblings_spacing():
         print('Anomaly US13: Siblings {sibling1} and {sibling2} were born less than 8 months apart.\n'.format(
             sibling1 = sibling1.short_repr, sibling2 = sibling2.short_repr ))
-        
+
     for fam in reporter.mult_births_less_five():
         print ('Anomaly US14: Family {fam} had 5 or more children born at the same time. \n'.format( fam = fam.short_repr))
-        
+
     for fam in reporter.fewer_than_15():
         print ('Anomaly US15: Family {fam} has 15 or more siblings. \n'.format( fam = fam.short_repr))
 
@@ -93,8 +93,18 @@ def main():
         print('Anomaly US16: {ind} is a male'.format(ind=ind.short_repr) +
               " who's surname does not match his families, " + '{fam}.\n'.format(fam=fam.short_repr))
 
+    for (spouse1, spouse2, parent1, parent2) in reporter.first_cousins_should_not_marry():
+        print('Anomaly US19: First cousins {spouse1} and {spouse2} are married thru parents {parent1} and {parent2}.'.format(
+                spouse1 = spouse1.short_repr,
+                spouse2 = spouse2.short_repr,
+                parent1 = parent1.short_repr,
+                parent2 = parent2.short_repr))
+
     for ind in reporter.correct_gender_role():
         print('Anomaly US21: Individual {ind} has an incorrect gender role. \n'.format(ind=ind.short_repr))
 
+    for (ind1, ind2) in reporter.unique_name_and_birth_date():
+        print('Anomaly US23: {ind1} and {ind2} have the same name and birth date.'.format(ind1 = ind1, ind2 = ind2))
+        
 if __name__ == '__main__':
     main()

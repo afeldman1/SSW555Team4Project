@@ -75,6 +75,13 @@ class GedReporterTest(unittest.TestCase):
         (inds, fams) = gedcom.parser.parse_file('datafiles/US19_first_cousins_should_not_marry.ged')
         reporter = GedReporter(inds, fams)
         
+        # use a set because we want to ignore order when using equality
+        ids = [frozenset((ind1.uid, ind2.uid, parent1.uid, parent2.uid))
+                for (ind1, ind2, parent1, parent2)
+                in reporter.first_cousins_should_not_marry()]
+        
+        self.assertTrue(frozenset(('@I07@', '@I08@', '@I04@', '@I05@')) in ids)
+        
     def test_US23_unique_name_and_birth_date(self):
     
         (inds, fams) = gedcom.parser.parse_file('datafiles/US23_unique_name_and_birth_date.ged')

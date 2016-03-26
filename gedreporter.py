@@ -281,6 +281,40 @@ class GedReporter(object):
                         len(ind.name.rsplit(" ", 1)) > 1 and surname != ind.name.rsplit(" ", 1)[1])):
                     yield (ind, fam)
 
+    def first_cousins_should_not_marry(self):
+        """
+            US19: First cousins should not marry
+            First cousins should not marry one another.
+        """
+        for fam in self.families.values():
+        
+            try:
+                wife = self.individuals[fam.wife]
+                husband = self.individuals[fam.husband]
+
+                wife_mom = self._mother_of(wife)
+                wife_dad = self._father_of(wife)
+                husband_mom = self._mother_of(husband)
+                husband_dad = self._father_of(husband)
+
+                if wife_mom and husband_mom and wife_mom.family_by_blood and husband_mom.family_by_blood:
+                    if wife_mom.family_by_blood == husband_mom.family_by_blood:
+                        yield (wife, husband, wife_mom, husband_mom)
+                        
+                if wife_mom and husband_dad and wife_mom.family_by_blood and husband_dad.family_by_blood:
+                    if wife_mom.family_by_blood == husband_dad.family_by_blood:
+                        yield (wife, husband, wife_mom, husband_dad)
+                        
+                if wife_dad and husband_mom and wife_dad.family_by_blood and husband_mom.family_by_blood:
+                    if wife_dad.family_by_blood == husband_mom.family_by_blood:
+                        yield (wife, husband, wife_dad, husband_mom)
+                        
+                if wife_dad and husband_dad and wife_dad.family_by_blood and husband_dad.family_by_blood:
+                    if wife_dad.family_by_blood == husband_dad.family_by_blood:
+                        yield (wife, husband, wife_dad, husband_dad)
+            except KeyError:
+                continue
+
     def correct_gender_role(self):
         """
             US21: Correct gender for role
@@ -291,7 +325,7 @@ class GedReporter(object):
                 yield (self._inds[fam.husband])
             if fam.wife and self._inds[fam.wife].sex != 'F':
                 yield (self._inds[fam.wife])
-                
+
     def unique_name_and_birth_date(self):
         """
             US23: Unique name and birth date
