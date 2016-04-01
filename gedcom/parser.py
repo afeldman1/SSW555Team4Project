@@ -66,22 +66,32 @@ def parse_file(fname):
                         elif prevTag == "DIV":
                             fams[uid].divorce_date = parse_date(payload)
 
-                elif gedline.tag == "INDI":         #If start of individual record
-                    uid = gedline.payload           #Store identifier in dictionary and
-                    inds[uid] = Individual(uid)     #prepare for more individual info
-                    processInd = True
-                    processFam = False
-                elif gedline.tag == "FAM":          #If start of family record
-                    uid = gedline.payload           #Store identifier in dictionary and
-                    fams[uid] = Family(uid)         #prepare for more family info
-                    processFam = True
-                    processInd = False
+                elif gedline.tag == "INDI":  # If start of individual record
+                    uid = gedline.payload  # Store identifier in dictionary and
+
+                    if uid in inds:
+                        print(
+                            "Error US22: Repeating Individual IDs(" + uid + '). The file was unable to be correctly loaded.')
+                    else:
+                        inds[uid] = Individual(uid)  # prepare for more individual info
+                        processInd = True
+                        processFam = False
+                elif gedline.tag == "FAM":  # If start of family record
+                    uid = gedline.payload  # Store identifier in dictionary and
+
+                    if uid in fams:
+                        print(
+                            "Error US22: Repeating Family IDs(" + uid + "). The file was unable to be correctly loaded.")
+                    else:
+                        fams[uid] = Family(uid)  # prepare for more family info
+                        processFam = True
+                        processInd = False
 
                 prevTag = tag    #Save tag to associate date on next gedline
 
-        return (inds, fams)
+        return inds, fams
 
-    
+
 def parse_date(date_text):
     """
         Parses a GEDCOM format date into an internal date object.
