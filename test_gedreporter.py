@@ -46,6 +46,25 @@ def perform_gedfile_sanity_check():
 
 class GedReporterTest(unittest.TestCase):
 
+    def test_US05_marriage_before_death(self):
+        
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US05_marriage_before_death.ged')
+        reporter = GedReporter(inds, fams)
+        
+        ind_fam_ids = [(ind.uid, fam.uid) for (ind, fam) in reporter.marriage_before_death()]
+        
+        self.assertTrue(('@I2@','@F1@') in ind_fam_ids)
+        self.assertTrue(('@I2@','@F1@') in ind_fam_ids)
+        
+    def test_US06_divorce_before_death(self):
+        
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US06_divorce_before_death.ged')
+        reporter = GedReporter(inds, fams)
+        
+        ind_fam_ids = [(ind.uid, fam.uid) for (ind, fam) in reporter.divorce_before_death()]
+        
+        self.assertTrue(('@I2@','@F1@') in ind_fam_ids)
+
     def test_US07_less_than_150_years_old(self):
 
         (inds, fams) = gedcom.parser.parse_file('datafiles/US07_less_than_150_years_old.ged')
