@@ -348,15 +348,6 @@ class GedReporter(object):
             if ind1.name == ind2.name and ind1.birthday == ind2.birthday and ind1.family_by_blood == ind2.family_by_blood:
                 yield (ind1, ind2,ind1.family_by_blood)
 
-
-        """        for fam in self._fams.values():
-            if len(fam.children)  < 2 :
-                continue
-            else:
-                for (ind1, ind2) in itertools.combinations(fam.children,2):
-                    if self._inds[ind1].name == self._inds[ind2].name and self._inds[ind1].birthday == self._inds[ind2].birthday:
-                        yield(self._inds[ind1], self._inds[ind2], fam)
-"""
     # Some helper methods to perform common operations on individuals and
     # families.
 
