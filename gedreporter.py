@@ -281,6 +281,50 @@ class GedReporter(object):
                         len(ind.name.rsplit(" ", 1)) <= 1 or (
                         len(ind.name.rsplit(" ", 1)) > 1 and surname != ind.name.rsplit(" ", 1)[1])):
                     yield (ind, fam)
+                    
+    
+    def marriage_to_descendants(self):
+        """
+            US17: No marriages to descendants
+            Parents should not marry any of their descendants
+        """
+        
+        for fam in self._fams.values():
+            for child in fam.children:
+                if self._inds[fam.husband].short_repr == self._inds[child].short_repr:
+                    yield (self._inds[fam.wife], self._inds[child])
+                if self._inds[fam.wife].short_repr == self._inds[child].short_repr:
+                    yield (self._inds[fam.husband], self._inds[child])
+        
+        
+    
+    def sibling_marriage(self):
+        """
+            US18: Siblings should not marry
+            Siblings should not marry one another
+        """
+        
+        for fam in self._fams.values():
+            mother_of_husband = self._mother_of(self._inds[fam.husband])
+            father_of_husband = self._father_of(self._inds[fam.husband])
+            mother_of_wife = self._mother_of(self._inds[fam.wife])
+            father_of_wife = self._father_of(self._inds[fam.wife])
+            
+            if mother_of_husband == None:
+                continue
+            if father_of_husband == None:
+                continue
+            if mother_of_wife == None:
+                continue
+            if father_of_wife == None:
+                continue
+            
+            if mother_of_husband == mother_of_wife and father_of_husband == father_of_wife:
+                yield (self._inds[fam.husband], self._inds[fam.wife])
+                
+        
+    
+    
 
     def first_cousins_should_not_marry(self):
         """

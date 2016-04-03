@@ -1,0 +1,56 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE Test Case
+1 NOTE US14: Multiple births less than 5
+1 NOTE No more than 5 siblings should be born 
+1 NOTE at the same time
+1 NOTE ************************
+0 @I1@ INDI
+1 NAME Father //
+1 SEX M
+1 BIRT
+2 DATE 16 FEB 1967
+1 NOTE ========================
+0 @I2@ INDI
+1 NAME Mother //
+1 SEX F
+1 BIRT
+2 DATE 1 FEB 1970
+1 NOTE ========================
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I11@
+1 CHIL @I12@
+1 MARR
+2 DATE 20 JUL 1990
+1 DIV
+2 DATE 12 SEP 1993
+1 NOTE ========================
+0 @I11@ INDI
+1 NAME One
+1 SEX M
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @I12@ INDI
+1 NAME Two
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 2016
+1 FAMC @F1@
+1 NOTE ========================
+0 @F2@ FAM
+1 HUSB @I11@
+1 WIFE @I12@
+1 MARR
+2 DATE 20 JUL 1990
+1 DIV
+2 DATE 12 SEP 1993
+1 NOTE ========================
+0 TRLR

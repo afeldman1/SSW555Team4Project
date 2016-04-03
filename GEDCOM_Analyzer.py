@@ -97,6 +97,12 @@ def main():
     for (ind, fam) in reporter.male_last_names():
         print('Anomaly US16: {ind} is a male'.format(ind=ind.short_repr) +
               " who's surname does not match his families, " + '{fam}.\n'.format(fam=fam.short_repr))
+        
+    for (ind, ind2) in reporter.marriage_to_descendants():
+        print('Anomaly US17: {ind} is married to {ind2}, who is a descendant of {ind}'.format(ind=ind.short_repr, ind2=ind2.short_repr))
+        
+    for (ind,ind2) in reporter.sibling_marriage():
+        print('Anomaly US18: {ind} is married to {ind2} and they are siblings'.format(ind=ind.short_repr, ind2=ind2.short_repr)) 
 
     for (spouse1, spouse2, parent1, parent2) in reporter.first_cousins_should_not_marry():
         print('Anomaly US19: First cousins {spouse1} and {spouse2} are married thru parents {parent1} and {parent2}.'.format(
