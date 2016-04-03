@@ -7,6 +7,11 @@
 import sys
 import gedcom.parser
 import gedreporter
+from datetime import date
+
+def calculate_age(birthday):
+    today = date.today()
+    return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
 
 def main():
     """
@@ -25,7 +30,7 @@ def main():
     print('')
     print('Individuals:')
     for key in sorted(inds):
-        print("%s %s" % (key, inds[key].name))
+        print("%s %s, Age %s" % (key, inds[key].name, calculate_age(inds[key].birthday)))
     print('')
 
     print('Families:')
@@ -65,7 +70,7 @@ def main():
 
     for (child, when, parent) in reporter.birth_before_death_of_parents():
         print('Error US09: {child} was born {when} {parent} died.\n'.format(
-            child = child.short_repr, when = when, parent = parent))
+            child = child.short_repr, when = when, parent = parent.short_repr))
 
     for ind in reporter.marriage_after_14():
         print('Error US10: {spouse} birth date occurs fewer than 14 years before marriage date.\n'.format(
@@ -105,6 +110,9 @@ def main():
 
     for (ind1, ind2) in reporter.unique_name_and_birth_date():
         print('Anomaly US23: {ind1} and {ind2} have the same name and birth date.'.format(ind1 = ind1, ind2 = ind2))
+
+    for (ind1, ind2, fam) in reporter.unique_first_names():
+        print('Anomaly US25: {ind1} and {ind2} of family {fam} have the same first name and birthday'.format(ind1=ind1.short_repr, ind2=ind2.short_repr, fam=fam))
         
 if __name__ == '__main__':
     main()

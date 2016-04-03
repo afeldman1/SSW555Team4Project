@@ -158,6 +158,7 @@ class GedReporter(object):
 
             born = ind.birthday
             mother = fam.wife
+            
             if self._inds[mother].death_date:
                 if born > self._inds[mother].death_date:
                     yield (ind, 'after', self._inds[mother])
@@ -336,6 +337,26 @@ class GedReporter(object):
             if ind1.name == ind2.name and ind1.birthday == ind2.birthday:
                 yield (ind1, ind2)
 
+    def unique_first_names(self):
+        """
+            US25: Unique first names in families
+            No more than one child with the same name and birth date
+            should appear in a family
+        """
+
+        for (ind1, ind2) in itertools.combinations(self.individuals.values(), 2):
+            if ind1.name == ind2.name and ind1.birthday == ind2.birthday and ind1.family_by_blood == ind2.family_by_blood:
+                yield (ind1, ind2,ind1.family_by_blood)
+
+
+        """        for fam in self._fams.values():
+            if len(fam.children)  < 2 :
+                continue
+            else:
+                for (ind1, ind2) in itertools.combinations(fam.children,2):
+                    if self._inds[ind1].name == self._inds[ind2].name and self._inds[ind1].birthday == self._inds[ind2].birthday:
+                        yield(self._inds[ind1], self._inds[ind2], fam)
+"""
     # Some helper methods to perform common operations on individuals and
     # families.
 
