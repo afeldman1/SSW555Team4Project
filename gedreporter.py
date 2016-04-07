@@ -9,6 +9,7 @@ from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 import itertools
 
+
 class GedReporter(object):
     """
         This class takes dictionaries of individuals and families taken from a
@@ -116,7 +117,9 @@ class GedReporter(object):
             and current date should be less than 150 years after birth for all
             living people
         """
-        return filter(lambda ind: _calc_age(ind) >= 150, self._inds.values())
+        return filter(lambda ind: (relativedelta(ind.birthday,
+                                                 ind.death_date if ind.death_date else date.today()).years >= 150) if ind.birthday else 0,
+                      self._inds.values())
 
     def birth_before_marriage_of_parents(self):
         """
@@ -158,7 +161,7 @@ class GedReporter(object):
 
             born = ind.birthday
             mother = fam.wife
-            
+
             if self._inds[mother].death_date:
                 if born > self._inds[mother].death_date:
                     yield (ind, 'after', self._inds[mother])
@@ -186,7 +189,7 @@ class GedReporter(object):
             US11: No bigamy
             Marriage should not occur during marriage to another spouse
         """
-        for (family1, family2) in itertools.combinations(self._fams.values(),2):
+        for (family1, family2) in itertools.combinations(self._fams.values(), 2):
             if family1.husband == family2.husband:
                 if ((not family1.divorce_date and not family2.divorce_date)
                     or ((family1.divorce_date and not family2.divorce_date) and family2.marriage_date < family1.divorce_date)
@@ -213,15 +216,16 @@ class GedReporter(object):
             mother = self._mother_of(ind)
             father = self._father_of(ind)
 
-            if mother and father:
-                mother_age_diff = _year_diff(mother.birthday, ind.birthday)
-                father_age_diff = _year_diff(father.birthday, ind.birthday)
+            if mother and father and ind.birthday:
+                if mother.birthday:
+                    mother_age_diff = relativedelta(ind.birthday, mother.birthday).years
+                    if mother_age_diff >= 60:
+                        yield (ind, mother_age_diff, 'mother', mother)
 
-                if mother_age_diff >= 60:
-                    yield (ind, mother_age_diff, 'mother', mother)
-
-                if father_age_diff >= 80:
-                    yield (ind, father_age_diff, 'father', father)
+                if father.birthday:
+                    father_age_diff = relativedelta(ind.birthday, father.birthday).years
+                    if father_age_diff >= 80:
+                        yield (ind, father_age_diff, 'father', father)
 
     def siblings_spacing(self):
         """
@@ -233,8 +237,9 @@ class GedReporter(object):
             children = [self._inds[ind_uid] for ind_uid in fam.children]
             for (child1, child2) in itertools.combinations(children, 2):
                 # For convenience, 1 month = 30 days.
-                if timedelta(2) < abs(child2.birthday - child1.birthday) < timedelta(241):
-                    yield (child1, child2)
+                if child1.birthday and child2.birthday:
+                    if timedelta(2) < abs(child2.birthday - child1.birthday) < timedelta(241):
+                        yield (child1, child2)
 
     def mult_births_less_five(self):
         """
@@ -248,7 +253,7 @@ class GedReporter(object):
 
             birthdays = [x.birthday for x in [self._inds[x] for x in individuals]]
 
-            atleast_5 = set([x for x in birthdays if birthdays.count(x) >=5])
+            atleast_5 = set([x for x in birthdays if birthdays.count(x) >= 5])
 
             if atleast_5:
                 yield fam
@@ -278,38 +283,35 @@ class GedReporter(object):
 
             for ind in self._inds.values():
                 if ind.sex == 'M' and (ind.family_by_blood == fam.uid or ind.family_in_law == fam.uid) and (
-                        len(ind.name.rsplit(" ", 1)) <= 1 or (
-                        len(ind.name.rsplit(" ", 1)) > 1 and surname != ind.name.rsplit(" ", 1)[1])):
+                                len(ind.name.rsplit(" ", 1)) <= 1 or (
+                                        len(ind.name.rsplit(" ", 1)) > 1 and surname != ind.name.rsplit(" ", 1)[1])):
                     yield (ind, fam)
-                    
-    
+
     def marriage_to_descendants(self):
         """
             US17: No marriages to descendants
             Parents should not marry any of their descendants
         """
-        
+
         for fam in self._fams.values():
             for child in fam.children:
                 if self._inds[fam.husband].short_repr == self._inds[child].short_repr:
                     yield (self._inds[fam.wife], self._inds[child])
                 if self._inds[fam.wife].short_repr == self._inds[child].short_repr:
                     yield (self._inds[fam.husband], self._inds[child])
-        
-        
-    
+
     def sibling_marriage(self):
         """
             US18: Siblings should not marry
             Siblings should not marry one another
         """
-        
+
         for fam in self._fams.values():
             mother_of_husband = self._mother_of(self._inds[fam.husband])
             father_of_husband = self._father_of(self._inds[fam.husband])
             mother_of_wife = self._mother_of(self._inds[fam.wife])
             father_of_wife = self._father_of(self._inds[fam.wife])
-            
+
             if mother_of_husband == None:
                 continue
             if father_of_husband == None:
@@ -318,13 +320,9 @@ class GedReporter(object):
                 continue
             if father_of_wife == None:
                 continue
-            
+
             if mother_of_husband == mother_of_wife and father_of_husband == father_of_wife:
                 yield (self._inds[fam.husband], self._inds[fam.wife])
-                
-        
-    
-    
 
     def first_cousins_should_not_marry(self):
         """
@@ -332,7 +330,7 @@ class GedReporter(object):
             First cousins should not marry one another.
         """
         for fam in self.families.values():
-        
+
             try:
                 wife = self.individuals[fam.wife]
                 husband = self.individuals[fam.husband]
@@ -345,15 +343,15 @@ class GedReporter(object):
                 if wife_mom and husband_mom and wife_mom.family_by_blood and husband_mom.family_by_blood:
                     if wife_mom.family_by_blood == husband_mom.family_by_blood:
                         yield (wife, husband, wife_mom, husband_mom)
-                        
+
                 if wife_mom and husband_dad and wife_mom.family_by_blood and husband_dad.family_by_blood:
                     if wife_mom.family_by_blood == husband_dad.family_by_blood:
                         yield (wife, husband, wife_mom, husband_dad)
-                        
+
                 if wife_dad and husband_mom and wife_dad.family_by_blood and husband_mom.family_by_blood:
                     if wife_dad.family_by_blood == husband_mom.family_by_blood:
                         yield (wife, husband, wife_dad, husband_mom)
-                        
+
                 if wife_dad and husband_dad and wife_dad.family_by_blood and husband_dad.family_by_blood:
                     if wife_dad.family_by_blood == husband_dad.family_by_blood:
                         yield (wife, husband, wife_dad, husband_dad)
@@ -390,7 +388,7 @@ class GedReporter(object):
 
         for (ind1, ind2) in itertools.combinations(self.individuals.values(), 2):
             if ind1.name == ind2.name and ind1.birthday == ind2.birthday and ind1.family_by_blood == ind2.family_by_blood:
-                yield (ind1, ind2,ind1.family_by_blood)
+                yield (ind1, ind2, ind1.family_by_blood)
 
     # Some helper methods to perform common operations on individuals and
     # families.
@@ -417,28 +415,3 @@ class GedReporter(object):
         """
         fam = self._blood_family_of(ind)
         return self._inds[fam.husband] if fam else None
-
-
-# Some static helper functions
-
-def _calc_age(ind):
-    """
-        Calaculates the current age of an individual. If the individual has
-        passed away, then calculates their age at the time of passing.
-    """
-    born = ind.birthday
-
-    if not born:
-        return 0
-    else:
-        end_date = ind.death_date if ind.death_date else date.today()
-        return _year_diff(born, end_date)
-
-
-def _year_diff(start_date, end_date):
-    """
-        Calculates the amount of entire years passed from start date to end
-        date.
-    """
-    offset = int((end_date.month, end_date.day) < (start_date.month, start_date.day))
-    return end_date.year - start_date.year - offset

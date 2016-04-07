@@ -5,13 +5,12 @@
 """
 
 import sys
+
+from dateutil.relativedelta import relativedelta
+
 import gedcom.parser
 import gedreporter
 from datetime import date
-
-def calculate_age(birthday):
-    today = date.today()
-    return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
 
 def main():
     """
@@ -30,7 +29,7 @@ def main():
     print('')
     print('Individuals:')
     for key in sorted(inds):
-        print("%s %s, Age %s" % (key, inds[key].name, calculate_age(inds[key].birthday)))
+        print("%s %s, Age %s" % (key, inds[key].name, relativedelta(date.today(), inds[key].birthday).years))
     print('')
 
     print('Families:')
