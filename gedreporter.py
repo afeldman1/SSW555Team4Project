@@ -390,6 +390,27 @@ class GedReporter(object):
             if ind1.name == ind2.name and ind1.birthday == ind2.birthday and ind1.family_by_blood == ind2.family_by_blood:
                 yield (ind1, ind2, ind1.family_by_blood)
 
+    def list_deceased(self):
+        """
+            US29: List deceased
+            List all deceased individuals in a GEDCOM file
+        """
+        for ind in self._inds.values():
+            if ind.death_date:
+                yield ind
+
+    def list_living_married(self):
+        """
+            US30: List living married
+            List all living married people in a GEDCOM file
+        """
+        for fam in self._fams.values():
+            if not fam.divorce_date:
+                if not self._inds[fam.husband].death_date:
+                    yield self._inds[fam.husband]
+                if not self._inds[fam.wife].death_date:
+                    yield self._inds[fam.wife]
+
     # Some helper methods to perform common operations on individuals and
     # families.
 

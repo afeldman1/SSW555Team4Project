@@ -118,6 +118,12 @@ def main():
 
     for (ind1, ind2, fam) in reporter.unique_first_names():
         print('Anomaly US25: {ind1} and {ind2} of family {fam} have the same first name and birthday'.format(ind1=ind1.short_repr, ind2=ind2.short_repr, fam=fam))
+
+    for ind in reporter.list_deceased():
+        print('US29: Individual {ind} is deceased'.format(ind=ind.short_repr))
+
+    for ind in reporter.list_living_married():
+        print('US30: Individual {ind} is living and married.'.format(ind=ind.short_repr))
         
 if __name__ == '__main__':
     main()
