@@ -37,6 +37,13 @@ def main():
         husband_name = inds[fams[key].husband].name if fams[key].husband else ''
         wife_name = inds[fams[key].wife].name if fams[key].wife else ''
         print("%s %s %s" % (key, husband_name, wife_name))
+        
+        # US
+        for child_uid in sorted(fams[key].children,
+                                key = lambda ind_id: inds[ind_id].birthday):                                
+            print("    " + inds[child_uid].name)
+        
+        
     print('')
 
     for (ent, event) in reporter.dates_before_current_date():
@@ -124,6 +131,7 @@ def main():
 
     for ind in reporter.list_living_married():
         print('US30: Individual {ind} is living and married.'.format(ind=ind.short_repr))
+        
         
 if __name__ == '__main__':
     main()

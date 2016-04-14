@@ -12,13 +12,13 @@ class Family(GedObject):
                  uid,
                  husband = None,
                  wife = None,
-                 children = [],
+                 children = None,
                  marriage_date = None,
                  divorce_date = None):
         super().__init__(uid)
         self._husband = husband
         self._wife = wife
-        self._children = children
+        self._children = children if children else []
         self._marriage_date = marriage_date
         self._divorce_date = divorce_date
 
