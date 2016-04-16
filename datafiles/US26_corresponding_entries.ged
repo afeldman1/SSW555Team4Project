@@ -1,0 +1,112 @@
+0 HEAD
+1 NOTE ************************
+1 NOTE SSW555
+1 NOTE 2016 Spring
+1 NOTE Team 4
+1 NOTE ************************
+1 NOTE US26: Corresponding entries
+1 NOTE All family roles (spouse, child) specified in an individual record
+1 NOTE  should have corresponding entries in those family records, and
+1 NOTE  individual roles (spouse, child) specified in family records should have
+1 NOTE  corresponding entries in those individual's records
+1 NOTE ************************
+1 NOTE ************************
+1 NOTE ------------------------
+0 @I01@ INDI
+1 NAME Abraham /Metzger/
+1 SEX M
+1 BIRT
+2 DATE 4 JUL 1933
+1 FAMS @F01@
+1 NOTE ------------------------
+0 @I02@ INDI
+1 NAME Edith /Metzger/
+1 SEX F
+1 BIRT
+2 DATE 31 OCT 1940
+1 NOTE ------------------------
+0 @I03@ INDI
+1 NAME Dorothy /Metzger/
+1 SEX F
+1 BIRT
+2 DATE 11 MAY 1966
+1 FAMS @F02@
+1 NOTE ------------------------
+0 @I04@ INDI
+1 NAME Herman /Metzger/
+1 SEX M
+1 BIRT
+2 DATE 17 JAN 1960
+1 FAMS @F02@
+1 FAMC @F01@
+1 NOTE ------------------------
+0 @I05@ INDI
+1 NAME Heather /Smith/
+1 SEX F
+1 BIRT
+2 DATE 10 AUG 1963
+1 FAMS @F03@
+1 FAMC @F01@
+1 NOTE ------------------------
+0 @I06@ INDI
+1 NAME Brandon /Smith/
+1 SEX M
+1 BIRT
+2 DATE 28 FEB 1960
+1 FAMS @F03@
+1 NOTE ------------------------
+0 @I07@ INDI
+1 NAME Emily /Metzger/
+1 SEX F
+1 BIRT
+2 DATE 10 MAR 1994
+1 NOTE ------------------------
+0 @I08@ INDI
+1 NAME David /Smith/
+1 SEX M
+1 BIRT
+2 DATE 3 JUN 1990
+1 FAMS @F04@
+1 FAMC @F03@
+1 NOTE ------------------------
+0 @I09@ INDI
+1 NAME Helen /Smith/
+1 SEX F
+1 BIRT
+2 DATE 19 MAY 1993
+1 FAMS @F04@
+1 NOTE ------------------------
+0 @I10@ INDI
+1 NAME Martin /Metzger/
+1 SEX M
+1 BIRT
+2 DATE 23 APR 1988
+1 FAMC @F02@
+1 NOTE ------------------------
+0 @F01@ FAM
+1 HUSB @I01@
+1 WIFE @I02@
+1 CHIL @I05@
+1 MARR
+2 DATE 20 JUL 1959
+1 NOTE ------------------------
+0 @F02@ FAM
+1 HUSB @I04@
+1 WIFE @I03@
+1 CHIL @I07@
+1 MARR
+2 DATE 13 MAR 1989
+1 NOTE ------------------------
+0 @F03@ FAM
+1 WIFE @I05@
+1 CHIL @I08@
+1 MARR
+2 DATE 20 SEP 1987
+1 NOTE ------------------------
+0 @F04@ FAM
+1 HUSB @I08@
+1 WIFE @I09@
+1 MARR
+2 DATE 25 MAR 2016
+1 NOTE ------------------------
+0 TRLR
