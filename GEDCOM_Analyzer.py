@@ -37,6 +37,14 @@ def main():
         husband_name = inds[fams[key].husband].name if fams[key].husband else ''
         wife_name = inds[fams[key].wife].name if fams[key].wife else ''
         print("%s %s %s" % (key, husband_name, wife_name))
+        
+        # US28: Order siblings by age
+        # List siblings in families by age  
+        for child_uid in sorted(fams[key].children,
+                                key = lambda ind_id: inds[ind_id].birthday):                                
+            print("    " + inds[child_uid].name)
+        
+        
     print('')
 
     for (ent, event) in reporter.dates_before_current_date():
@@ -118,6 +126,13 @@ def main():
 
     for (ind1, ind2, fam) in reporter.unique_first_names():
         print('Anomaly US25: {ind1} and {ind2} of family {fam} have the same first name and birthday'.format(ind1=ind1.short_repr, ind2=ind2.short_repr, fam=fam))
+
+    for ind in reporter.list_deceased():
+        print('US29: Individual {ind} is deceased'.format(ind=ind.short_repr))
+
+    for ind in reporter.list_living_married():
+        print('US30: Individual {ind} is living and married.'.format(ind=ind.short_repr))
+        
         
     for (entity1, relationship, entity2) in reporter.corresponding_entries():
         print('Error US26: {entity1} is missing a corresponding {role} entry for {entity2}'.format(

@@ -311,10 +311,10 @@ class GedReporter(object):
         """
 
         for fam in self._fams.values():
-        
+
             if not fam.wife or not fam.husband:
                 continue
-        
+
             mother_of_husband = self._mother_of(self._inds[fam.husband])
             father_of_husband = self._father_of(self._inds[fam.husband])
             mother_of_wife = self._mother_of(self._inds[fam.wife])
@@ -398,6 +398,7 @@ class GedReporter(object):
             if ind1.name == ind2.name and ind1.birthday == ind2.birthday and ind1.family_by_blood == ind2.family_by_blood:
                 yield (ind1, ind2, ind1.family_by_blood)
 
+
     def corresponding_entries(self):
         """
             US26: Corresponding entries
@@ -437,11 +438,32 @@ class GedReporter(object):
                 wife = self.individuals[fam.wife]
                 if not wife.family_in_law or wife.family_in_law != fam.uid:
                     yield (wife, 'wife', fam)
-            
+
             if fam.husband:
                 husband = self.individuals[fam.husband]
                 if not husband.family_in_law or husband.family_in_law != fam.uid:
                     yield (husband, 'husband', fam)
+
+    def list_deceased(self):
+        """
+            US29: List deceased
+            List all deceased individuals in a GEDCOM file
+        """
+        for ind in self._inds.values():
+            if ind.death_date:
+                yield ind
+
+    def list_living_married(self):
+        """
+            US30: List living married
+            List all living married people in a GEDCOM file
+        """
+        for fam in self._fams.values():
+            if not fam.divorce_date and fam.husband and fam.wife:
+                if not self._inds[fam.husband].death_date:
+                    yield self._inds[fam.husband]
+                if not self._inds[fam.wife].death_date:
+                    yield self._inds[fam.wife]
 
 
     # Some helper methods to perform common operations on individuals and
