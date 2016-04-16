@@ -27,13 +27,13 @@ def perform_gedfile_sanity_check():
     outfiles_dir_name = 'outfiles'
     if not os.path.exists(outfiles_dir_name):
         os.makedirs(outfiles_dir_name)
-    
+
     for ged_filename in ged_filenames:
-    
+
         bare_ged_filename = os.path.splitext(os.path.basename(ged_filename))[0]
         outfilename = bare_ged_filename + '.out'
         outfilepath = os.path.join(outfiles_dir_name, outfilename)
-        
+
         with open(outfilepath, 'w') as outfile:
             retcode = subprocess.call(['python', 'GEDCOM_Analyzer.py', ged_filename],
                                         stdout = outfile,
@@ -47,22 +47,22 @@ def perform_gedfile_sanity_check():
 class GedReporterTest(unittest.TestCase):
 
     def test_US05_marriage_before_death(self):
-        
+
         (inds, fams) = gedcom.parser.parse_file('datafiles/US05_marriage_before_death.ged')
         reporter = GedReporter(inds, fams)
-        
+
         ind_fam_ids = [(ind.uid, fam.uid) for (ind, fam) in reporter.marriage_before_death()]
-        
+
         self.assertTrue(('@I2@','@F1@') in ind_fam_ids)
         self.assertTrue(('@I2@','@F1@') in ind_fam_ids)
-        
+
     def test_US06_divorce_before_death(self):
-        
+
         (inds, fams) = gedcom.parser.parse_file('datafiles/US06_divorce_before_death.ged')
         reporter = GedReporter(inds, fams)
-        
+
         ind_fam_ids = [(ind.uid, fam.uid) for (ind, fam) in reporter.divorce_before_death()]
-        
+
         self.assertTrue(('@I2@','@F1@') in ind_fam_ids)
 
     def test_US07_less_than_150_years_old(self):
@@ -122,34 +122,49 @@ class GedReporterTest(unittest.TestCase):
 
         self.assertTrue(('Born tooLate @I12@', '60', 'mother', 'Mother ofTheFamily @I2@') in ids)
         self.assertTrue(('Born tooLate @I12@', '80', 'father', 'Father ofTheFamily @I1@') in ids)
-        
+
     def test_US19_first_cousins_should_not_marry(self):
-    
+
         (inds, fams) = gedcom.parser.parse_file('datafiles/US19_first_cousins_should_not_marry.ged')
         reporter = GedReporter(inds, fams)
-        
+
         # use a set because we want to ignore order when using equality
         ids = [frozenset((ind1.uid, ind2.uid, parent1.uid, parent2.uid))
                 for (ind1, ind2, parent1, parent2)
                 in reporter.first_cousins_should_not_marry()]
-        
+
         self.assertTrue(frozenset(('@I07@', '@I08@', '@I04@', '@I05@')) in ids)
-        
+
     def test_US23_unique_name_and_birth_date(self):
-    
+
         (inds, fams) = gedcom.parser.parse_file('datafiles/US23_unique_name_and_birth_date.ged')
         reporter = GedReporter(inds, fams)
-        
+
         # use a set because we want to ignore order when using equality
         ids = [frozenset((ind1.uid, ind2.uid))
                 for (ind1, ind2)
                 in reporter.unique_name_and_birth_date()]
-                
+
         self.assertTrue(frozenset(('@I12@', '@I11@')) in ids)
         self.assertTrue(frozenset(('@I10@', '@I13@')) in ids)
 
+    def test_US26_corresponding_entries(self):
+
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US26_corresponding_entries.ged')
+        reporter = GedReporter(inds, fams)
+
+        ids = [(entity1.uid, relationship, entity2.uid)
+                    for (entity1, relationship, entity2)
+                    in reporter.corresponding_entries()]
+
+        self.assertTrue(('@F03@', 'husband', '@I06@') in ids)
+        self.assertTrue(('@F01@', 'child', '@I04@') in ids)
+        self.assertTrue(('@I02@', 'wife', '@F01@') in ids)
+        self.assertTrue(('@I07@', 'child', '@F02@') in ids)
+
+
 if __name__ == '__main__':
-    
+
     print('\nGenerating .ged acceptance test files...\n')
     perform_gedfile_sanity_check()
 

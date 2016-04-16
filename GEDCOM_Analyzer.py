@@ -119,5 +119,9 @@ def main():
     for (ind1, ind2, fam) in reporter.unique_first_names():
         print('Anomaly US25: {ind1} and {ind2} of family {fam} have the same first name and birthday'.format(ind1=ind1.short_repr, ind2=ind2.short_repr, fam=fam))
         
+    for (entity1, relationship, entity2) in reporter.corresponding_entries():
+        print('Error US26: {entity1} is missing a corresponding {role} entry for {entity2}'.format(
+            entity1 = entity1, role = relationship, entity2 = entity2))
+        
 if __name__ == '__main__':
     main()

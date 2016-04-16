@@ -7,6 +7,8 @@
 from datetime import date
 from datetime import timedelta
 from dateutil.relativedelta import relativedelta
+from gedcom.individual import Individual
+
 import itertools
 
 
@@ -93,10 +95,10 @@ class GedReporter(object):
         for fam in self._fams.values():
             if fam.marriage_date is None:
                 continue
-            if self._inds[fam.wife].death_date is not None:
+            if fam.wife and self._inds[fam.wife].death_date is not None:
                 if self._inds[fam.wife].death_date < fam.marriage_date:
                     yield (self._inds[fam.wife], fam)
-            if self._inds[fam.husband].death_date is not None:
+            if fam.husband and self._inds[fam.husband].death_date is not None:
                 if self._inds[fam.husband].death_date < fam.marriage_date:
                     yield (self._inds[fam.husband], fam)
 
@@ -162,12 +164,12 @@ class GedReporter(object):
             born = ind.birthday
             mother = fam.wife
 
-            if self._inds[mother].death_date:
+            if mother and self._inds[mother].death_date:
                 if born > self._inds[mother].death_date:
                     yield (ind, 'after', self._inds[mother])
 
             father = fam.husband
-            if self._inds[father].death_date:
+            if father and self._inds[father].death_date:
                 if relativedelta(born, self._inds[father].death_date).months > 9:
                     yield (ind, 'more than nine months after', self._inds[father])
 
@@ -177,10 +179,10 @@ class GedReporter(object):
             Marriage should be at least 14 years after birth of both spouses
         """
         for fam in self._fams.values():
-            if fam.marriage_date and self._inds[fam.wife].birthday and relativedelta(
+            if fam.wife and fam.marriage_date and self._inds[fam.wife].birthday and relativedelta(
                     fam.marriage_date, self._inds[fam.wife].birthday).years < 14:
                 yield self._inds[fam.wife];
-            if fam.marriage_date and self._inds[fam.husband].birthday and relativedelta(
+            if fam.husband and fam.marriage_date and self._inds[fam.husband].birthday and relativedelta(
                     fam.marriage_date, self._inds[fam.husband].birthday).years < 14:
                 yield self._inds[fam.husband];
 
@@ -293,8 +295,10 @@ class GedReporter(object):
             Parents should not marry any of their descendants
         """
 
-        for fam in self._fams.values():
+        for fam in self.families.values():
             for child in fam.children:
+                if not fam.husband or not fam.wife:
+                    continue
                 if self._inds[fam.husband].short_repr == self._inds[child].short_repr:
                     yield (self._inds[fam.wife], self._inds[child])
                 if self._inds[fam.wife].short_repr == self._inds[child].short_repr:
@@ -307,6 +311,10 @@ class GedReporter(object):
         """
 
         for fam in self._fams.values():
+        
+            if not fam.wife or not fam.husband:
+                continue
+        
             mother_of_husband = self._mother_of(self._inds[fam.husband])
             father_of_husband = self._father_of(self._inds[fam.husband])
             mother_of_wife = self._mother_of(self._inds[fam.wife])
@@ -390,6 +398,52 @@ class GedReporter(object):
             if ind1.name == ind2.name and ind1.birthday == ind2.birthday and ind1.family_by_blood == ind2.family_by_blood:
                 yield (ind1, ind2, ind1.family_by_blood)
 
+    def corresponding_entries(self):
+        """
+            US26: Corresponding entries
+            All family roles (spouse, child) specified in an individual record
+            should have corresponding entries in those family records, and
+            individual roles (spouse, child) specified in family records should
+            have corresponding entries in those individual's records.
+        """
+
+        # check individual-to-family relationships
+        for ind in self.individuals.values():
+
+            blood_family = self._blood_family_of(ind)
+            spouse_family = self._spouse_family_of(ind)
+
+            # check child relationship
+            if blood_family and ind.uid not in blood_family.children:
+                yield (blood_family, 'child', ind)
+
+            # check spouse relationship
+            if spouse_family:
+                if ind.sex == 'F' and ind.uid != spouse_family.wife:
+                    yield (spouse_family, 'wife', ind)
+                elif ind.sex == 'M' and ind.uid != spouse_family.husband:
+                    yield (spouse_family, 'husband', ind)
+
+        # check family-to-individual relationships
+        for fam in self.families.values():
+
+            # check child relationship
+            for child in (self.individuals[child_uid] for child_uid in fam.children):
+                if not child.family_by_blood or child.family_by_blood != fam.uid:
+                    yield (child, 'child', fam)
+
+            # check spouse relationship
+            if fam.wife:
+                wife = self.individuals[fam.wife]
+                if not wife.family_in_law or wife.family_in_law != fam.uid:
+                    yield (wife, 'wife', fam)
+            
+            if fam.husband:
+                husband = self.individuals[fam.husband]
+                if not husband.family_in_law or husband.family_in_law != fam.uid:
+                    yield (husband, 'husband', fam)
+
+
     # Some helper methods to perform common operations on individuals and
     # families.
 
@@ -402,16 +456,25 @@ class GedReporter(object):
         else:
             return None
 
+    def _spouse_family_of(self, ind):
+        """
+            Retrieves the family a individual was married into.
+        """
+        if ind.family_in_law:
+            return self._fams[ind.family_in_law]
+        else:
+            return None
+
     def _mother_of(self, ind):
         """
             Retrieves the mother of an individual.
         """
         fam = self._blood_family_of(ind)
-        return self._inds[fam.wife] if fam else None
+        return self._inds[fam.wife] if fam and fam.wife else None
 
     def _father_of(self, ind):
         """
             Retrieves the father of an individual.
         """
         fam = self._blood_family_of(ind)
-        return self._inds[fam.husband] if fam else None
+        return self._inds[fam.husband] if fam and fam.husband else None

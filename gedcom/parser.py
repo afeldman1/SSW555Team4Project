@@ -11,12 +11,15 @@ from .family import Family
 
 
 def parse_file(fname):
-    """
-        Opens and parses GEDCOM file. Returns records as a tuple of lists of
-        (individuals, families).
-    """
-    with open(fname, 'r') as f:
-        gedcom_lines = (GEDCOMLine(line) for line in f)
+        """
+            Opens and parses GEDCOM file. Returns records as a tuple of lists of
+            (individuals, families).
+        """
+        f = open(fname, 'r')
+        lines = f.readlines()
+        f.close()
+        
+        gedcom_lines = (GEDCOMLine(line) for line in lines)
 
         inds = dict()
         fams = dict()
