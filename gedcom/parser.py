@@ -55,6 +55,8 @@ def parse_file(fname):
                             inds[uid].birthday = parse_date(payload)
                         elif prevTag == "DEAT":
                             inds[uid].death_date = parse_date(payload)
+                        elif prevTag == "DATE":
+                            print("US31: %s has multiple birthdays when parsing gedcom file" % inds[uid].name)
 
                 elif processFam:                    #If gathering data on family
                     if tag == "HUSB":               #Check tag and store appropriately

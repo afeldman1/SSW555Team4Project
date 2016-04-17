@@ -133,6 +133,8 @@ def main():
     for ind in reporter.list_living_married():
         print('US30: Individual {ind} is living and married.'.format(ind=ind.short_repr))
         
+    for ind in reporter.list_living_single():
+        print('US31: Individual {ind} is single and over the age of 30.'.format(ind=ind.short_repr))
         
     for (entity1, relationship, entity2) in reporter.corresponding_entries():
         print('Error US26: {entity1} is missing a corresponding {role} entry for {entity2}'.format(

@@ -464,6 +464,32 @@ class GedReporter(object):
                     yield self._inds[fam.husband]
                 if not self._inds[fam.wife].death_date:
                     yield self._inds[fam.wife]
+                    
+                    
+    def list_living_single(self):
+        """
+            US31: List living single
+            List all living people over 30 who have never been
+            married in a gedcom file
+        """
+        
+        parents = []
+        for fam in self._fams.values():
+            if fam.husband:
+                parents.append(fam.husband)
+            if fam.wife:
+                parents.append(fam.wife)
+                
+        
+        for ind in self._inds.values():
+                
+            if relativedelta(date.today(), ind.birthday).years <=30:    
+                continue
+            if ind.uid not in parents:
+                yield ind
+            
+    
+    #US31: Multiple births used when parsing gedcom file. Will be printed in beginning
 
 
     # Some helper methods to perform common operations on individuals and
