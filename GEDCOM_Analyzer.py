@@ -118,11 +118,25 @@ def main():
                 parent1 = parent1.short_repr,
                 parent2 = parent2.short_repr))
 
+    for (ind,child,fam) in reporter.aunts_and_uncles():
+        print('Anomaly US20: {child} is married to aunt/uncle {ind} in {fam}.\n'
+              .format(child = child.short_repr,
+                      ind = ind.short_repr,
+                      fam = fam.short_repr))
+
     for ind in reporter.correct_gender_role():
         print('Anomaly US21: Individual {ind} has an incorrect gender role. \n'.format(ind=ind.short_repr))
 
     for (ind1, ind2) in reporter.unique_name_and_birth_date():
         print('Anomaly US23: {ind1} and {ind2} have the same name and birth date.'.format(ind1 = ind1, ind2 = ind2))
+
+    for (fam1,fam2,ind1,ind2) in reporter.unique_families_by_spouses():
+        print('Error US24: {fam1} and {fam2} have the same spouses {ind1} and {ind2} by name and birthday.\n'
+              .format(fam1 = fam1.short_repr,
+                      fam2 = fam2.short_repr,
+                      ind1 = ind1.name,
+                      ind2 = ind2.name))
+        
 
     for (ind1, ind2, fam) in reporter.unique_first_names():
         print('Anomaly US25: {ind1} and {ind2} of family {fam} have the same first name and birthday'.format(ind1=ind1.short_repr, ind2=ind2.short_repr, fam=fam))

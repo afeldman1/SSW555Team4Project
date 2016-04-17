@@ -1,0 +1,57 @@
+0 HEAD
+1 SOUR Family Echo
+2 WWW http://www.familyecho.com/
+1 FILE Family 4
+1 DATE 17 APR 2016
+1 DEST ANSTFILE
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 SUBM @I1@
+2 NAME Rscarpet
+1 SUBN
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Bob /Loblaw/
+2 GIVN Bob
+2 SURN Loblaw
+2 _MARNM Loblaw
+1 SEX M
+1 BIRT
+2 DATE 1 JAN 1980
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Wife /Loblaw/
+2 GIVN Wife
+2 SURN Loblaw
+2 _MARNM Loblaw
+1 SEX F
+1 BIRT
+2 DATE 2 FEB 1981
+1 FAMS @F1@
+0 @I3@ INDI
+1 NAME Bob /Loblaw/
+2 GIVN Bob
+2 SURN Loblaw
+2 _MARNM Loblaw
+1 SEX M
+1 BIRT
+2 DATE 1 JAN 1980
+1 FAMS @F2@
+0 @I4@ INDI
+1 NAME Wife /Loblaw/
+2 GIVN Wife
+2 SURN Loblaw
+2 _MARNM Loblaw
+1 SEX F
+1 BIRT
+2 DATE 2 FEB 1981
+1 FAMS @F2@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+0 @F2@ FAM
+1 HUSB @I3@
+1 WIFE @I4@
+1 _CURRENT Y
+0 TRLR

@@ -366,6 +366,50 @@ class GedReporter(object):
             except KeyError:
                 continue
 
+
+    def aunts_and_uncles(self):
+        """
+            US20: Aunts and uncles
+            Aunts and uncles should not marry their neices or nephews
+        """
+        for ind in self._inds.values():
+            #make sure individual is married
+            if not ind.family_in_law:
+                continue
+            fam_where_spouse = self._fams[ind.family_in_law].uid
+
+            #make sure individual is a child in a family
+            if not ind.family_by_blood:
+                    continue
+            siblingFamily = self._fams[self._inds[ind.uid].family_by_blood]
+
+            #since individual is married and is a child in a family,
+            #check if family has siblings and siblings are married
+            for sibling in siblingFamily.children:
+                #skip over ind
+                if sibling == ind.uid:
+                    continue
+
+                if not self._inds[sibling].family_in_law:
+                    continue
+                sibling_family = self._inds[sibling].family_in_law
+            
+                #since sibling is married,
+                #check if sibling has children
+                if not self._fams[sibling_family].children:
+                    continue
+                neices_and_nephews = self._fams[sibling_family].children
+
+                #since sibling has children,
+                #loop through children to see if they are married
+                for n in neices_and_nephews:
+                    #check if neice/nephew is married
+                    if not self._inds[n].family_in_law:
+                        continue
+                    #check if spouse
+                    if fam_where_spouse == self._inds[n].family_in_law:
+                        yield ind, self._inds[n], self._fams[fam_where_spouse]
+                
     def correct_gender_role(self):
         """
             US21: Correct gender for role
@@ -387,6 +431,21 @@ class GedReporter(object):
             if ind1.name == ind2.name and ind1.birthday == ind2.birthday:
                 yield (ind1, ind2)
 
+    def unique_families_by_spouses(self):
+        """
+            US24: Unique families by spouses
+            No more than one family with the same spouses by name and the same
+            birth date should appear in a GEDCOM file
+        """
+        for (fam1,fam2) in itertools.combinations(self.families.values(),2):
+            hus1 = self._inds[fam1.husband]
+            wif1 = self._inds[fam1.wife]
+            hus2 = self._inds[fam2.husband]
+            wif2 = self._inds[fam2.wife]
+            if (hus1.name == hus2.name and hus1.birthday == hus2.birthday and wif1.name == wif2.name and wif1.birthday == wif2.birthday):
+                yield (fam1,fam2,self._inds[fam1.husband],self._inds[fam1.wife])
+    
+    
     def unique_first_names(self):
         """
             US25: Unique first names in families
