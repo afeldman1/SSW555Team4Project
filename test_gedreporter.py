@@ -46,6 +46,42 @@ def perform_gedfile_sanity_check():
 
 class GedReporterTest(unittest.TestCase):
 
+    def test_US01_dates_before_current_date(self):
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US01_dates_before_current_date.ged')
+        reporter = GedReporter(inds, fams)
+        
+        dates = [(ind.uid, date) for (ind, date) in reporter.dates_before_current_date()]
+        [('@I2@', 'death date'), ('@I1@', 'birthday'), ('@F1@', 'marriage date'), ('@F2@', 'divorce date')]
+        
+        self.assertTrue(('@I2@', 'death date') in dates)
+        self.assertTrue(('@I1@', 'birthday')in dates)
+        self.assertTrue(('@F1@', 'marriage date') in dates)
+        self.assertTrue(('@F2@', 'divorce date') in dates)
+        
+    def test_US02_birth_before_marriage(self):
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US02_birth_before_marriage.ged')
+        reporter = GedReporter(inds, fams)
+        
+        vals = [(ind.uid, fam.uid) for (ind, fam) in reporter.birth_before_marriage()]
+        
+        self.assertTrue(('@I2@', '@F2@') in vals)
+        
+    def test_US03_birth_before_death(self):
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US03_birth_before_death.ged')
+        reporter = GedReporter(inds, fams)
+        
+        vals = [ind.uid for ind in reporter.birth_before_death()]
+        self.assertTrue('@I5@' in vals)
+        
+    def test_US04_marriage_before_divorce(self):
+        (inds, fams) = gedcom.parser.parse_file('datafiles/US04_marriage_before_divorce.ged')
+        reporter = GedReporter(inds, fams)
+        
+        vals = [fam.uid for fam in reporter.marriage_before_divorce()]
+        
+        self.assertTrue('@F2@' in vals)
+        
+        
     def test_US05_marriage_before_death(self):
 
         (inds, fams) = gedcom.parser.parse_file('datafiles/US05_marriage_before_death.ged')
