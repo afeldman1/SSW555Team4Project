@@ -45,7 +45,6 @@ def perform_gedfile_sanity_check():
 
 
 class GedReporterTest(unittest.TestCase):
-<<<<<<< HEAD
 
     def test_US01_dates_before_current_date(self):
         (inds, fams) = gedcom.parser.parse_file('datafiles/US01_dates_before_current_date.ged')
@@ -83,8 +82,6 @@ class GedReporterTest(unittest.TestCase):
         self.assertTrue('@F2@' in vals)
         
         
-=======
->>>>>>> origin/master
     def test_US05_marriage_before_death(self):
         (inds, fams) = gedcom.parser.parse_file('datafiles/US05_marriage_before_death.ged')
         reporter = GedReporter(inds, fams)
