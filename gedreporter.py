@@ -437,6 +437,8 @@ class GedReporter(object):
             birth date should appear in a GEDCOM file
         """
         for (fam1,fam2) in itertools.combinations(self.families.values(),2):
+            if not (fam1.husband and fam1.wife and fam2.husband and fam2.wife):
+                continue
             hus1 = self._inds[fam1.husband]
             wif1 = self._inds[fam1.wife]
             hus2 = self._inds[fam2.husband]
